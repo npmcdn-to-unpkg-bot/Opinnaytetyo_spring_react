@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <title>Gists</title>
+  <script src="https://fb.me/react-15.1.0.js"></script>
+  <script src="https://fb.me/react-dom-15.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script src="https://npmcdn.com/react-router@2.4.0/umd/ReactRouter.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <link href="http://localhost:8080/Opinnaytetyo_spring/css/Gists.css" rel="stylesheet" type="text/css"/>
+  <!--  <script src="Application.js"></script>-->
+ 
+</head>
+  
+<body>
+  
+  <div class="container">
+  
+  </div>
+  
+</body>
+  
+<script type="text/babel">
+var destination = document.querySelector(".container");
+
+var Content = React.createClass({
+	
+	render: function() {
+		return (
+			<div className="content">
+				<LeftContent />;
+			</div>
+		)
+	}
+
+});
+
+
+var LeftContent = React.createClass({
+	
+	getInitialState: function() {
+		return {
+			gists: [],
+	    };
+	},
+
+	/*Haetaan gistit jos komponentin mounttaus onnistui*/
+	componentDidMount: function() {
+		this.getGists = $.ajax({
+			headers: { 
+	        	'Accept': 'application/json',
+	       		'Content-Type': 'application/json' 
+	   		},
+			type: "GET",
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/gists",
+			contentType: "application/json",
+			dataType: 'json'
+		})
+		.success(function(result) {
+			alert("Haku onnistui!");
+	      	this.setState({
+				gists: result
+			});	
+  		}.bind(this));
+	
+	},
+
+	/*Keskeytetään haku jos mounttaus epäonnistuu*/
+	componentWillUnmount: function() {
+		this.getGists.abort();
+	},
+	
+	
+	render: function() {
+		return (
+			<div className="contentLeft">			
+				<GistList gists={this.state.gists} />
+			</div>
+		)
+	}
+
+});
+
+
+
+var GistList = React.createClass({
+	
+	render: function() {
+		var gists = this.props.gists.map(gist => 
+			<SingleGist key={gist.id} id={gist.id} name={gist.files[0].filename} url={gist.url} description={gist.description} ownerLogin={gist.owner.login} />
+		);
+			
+	    return (
+	    	<div className="listGists">
+				{gists}
+			</div>
+	    )
+	  }
+});
+
+
+
+var SingleGist = React.createClass({
+	
+	render: function() {
+		return (
+			<div className="singleGist" id={this.props.id}>
+				<div className="singleGistContainer">
+					<p className="gistOwner">{this.props.ownerLogin} / <a href={this.props.url}>{this.props.name}</a></p>
+					<p className="description">{this.props.description}</p>
+				</div>
+			</div>
+		);
+	}
+
+});
+
+
+
+
+var ShowGist = React.createClass({
+	getInitialState: function() {
+		return {
+			gist: [],
+			id: "",
+			name: "",
+			description: "",
+	    	ownerLogin: "",
+			ownerAvatar: "",
+	        viewUrl: ""    
+	    };
+	  },
+
+	  componentDidMount: function() {
+	    //this.serverRequest = $.get(this.props.source, function (result) {
+		this.serverRequest = $.ajax({
+			headers: { 
+	        	'Accept': 'application/json',
+	       		'Content-Type': 'application/json' 
+	   		 },
+			type: "GET",
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/singlegistajax",
+			contentType: "application/json",
+			dataType: 'json'
+		})
+		.success(function(result) {
+   			var lastGist = result[0];
+	      	this.setState({
+				gists: result
+	      	});
+	    	
+  		}.bind(this));
+
+	     
+	  },
+
+	  componentWillUnmount: function() {
+	    this.serverRequest.abort();
+	  },
+
+	  render: function() {
+	    return (
+	     <div className="contentLeft">
+	      <div className="listGists">
+	   		{this.state.gists.map(function(gist) {
+           		 return <div className="singleGist" id={gist.id} key={gist.id}>
+					<div className="singleGistContainer">
+						<p className="gistOwner">{gist.owner.login} / <a href={gist.url}>{gist.files[0].filename}</a></p>
+						<p className="description">{gist.description}</p>
+					</div>
+				</div>;
+        	})}
+			
+	      </div>
+         </div>
+	    );
+	  }
+	});
+
+
+
+
+ReactDOM.render(
+	<Content />,
+	destination
+);
+
+</script>
+  
+  
+</html>

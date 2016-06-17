@@ -64,7 +64,7 @@ public class GistsController {
 	/**
 	 * Asetetaan mallille arvoksi haetut gistit ja palautetaan malli ja näkymä.
 	 */
-	@RequestMapping("/gists")
+	/*@RequestMapping("/gists")
     public ModelAndView getMultipleGists(@RequestParam(value = "fetch", required = false) String fetchMethod, 
     		@RequestParam(value = "search", required = false) String searchTarget, 
     		HttpServletRequest request, HttpServletResponse response)
@@ -101,7 +101,45 @@ public class GistsController {
 
         
     }
-	 
+	 */
+	@RequestMapping(value = "/gists", method = RequestMethod.GET, headers="Accept=*/*", produces = "application/json")
+    public @ResponseBody ArrayList<Gist> getMultipleGists(@RequestParam(value = "fetch", required = false) String fetchMethod, 
+    		@RequestParam(value = "search", required = false) String searchTarget, 
+    		
+    		HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+		String accessToken = ""; 
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			return null;
+		}
+		else {
+			ArrayList<Gist> gistsArr = null;
+			accessToken = (String)session.getAttribute("accesstoken");
+			//String fetchMethod = (String)request.getAttribute("fetch");
+			//Haetaan oletusarvona käyttäjän gistejä
+			fetchMethod = fetchMethod == null ? "user" : fetchMethod;
+			
+			if(searchTarget == null) {
+		        gistsArr = gists.getGists(fetchMethod, accessToken);
+			}
+			else {
+				gistsArr = gists.searchGistsByUser(fetchMethod, searchTarget, accessToken);
+			}
+	        
+	        
+	        //Sijoitetaan gistit, sekä hakutapa hashmapiin, joka puolestaan sijoitetaan mallin arvoksi
+	        HashMap<String, Object> modelValues = new HashMap<String, Object>();
+	        modelValues.put("fetchMethod", fetchMethod);
+	        modelValues.put("gistList", gistsArr);
+	      
+	        //Palautetaan malli ja näkymä
+	        return gistsArr;
+		}
+
+        
+    }
 	
 	@RequestMapping("/singlegist")
     public ModelAndView getSingleGist(@RequestParam("id") String gistId, 
