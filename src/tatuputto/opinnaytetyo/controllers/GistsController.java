@@ -127,20 +127,14 @@ public class GistsController {
 			else {
 				gistsArr = gists.searchGistsByUser(fetchMethod, searchTarget, accessToken);
 			}
-	        
-	        
-	        //Sijoitetaan gistit, sekä hakutapa hashmapiin, joka puolestaan sijoitetaan mallin arvoksi
-	        HashMap<String, Object> modelValues = new HashMap<String, Object>();
-	        modelValues.put("fetchMethod", fetchMethod);
-	        modelValues.put("gistList", gistsArr);
-	      
+	     
 	        //Palautetaan malli ja näkymä
 	        return gistsArr;
 		}
 
         
     }
-	
+	/*
 	@RequestMapping("/singlegist")
     public ModelAndView getSingleGist(@RequestParam("id") String gistId, 
     		HttpServletRequest request, HttpServletResponse response)
@@ -148,7 +142,7 @@ public class GistsController {
 	
 		HttpSession session = request.getSession(false);
 		if(session == null) {
-			return new ModelAndView("403forbidden");
+			return null;
 		}
 		else {
 			String accessToken = (String)session.getAttribute("accesstoken");
@@ -159,7 +153,26 @@ public class GistsController {
 	        return new ModelAndView("singlegist", "gist", gist);	
 		}	
     }
+	*/
 	
+	@RequestMapping("/singlegist")
+    public @ResponseBody Gist getSingleGist(@RequestParam("id") String gistId, 
+    		HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+	
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			return null;
+		}
+		else {
+			String accessToken = (String)session.getAttribute("accesstoken");
+			int userId = (int)session.getAttribute("userid");
+			
+			Gist gist = singleGist.getGist(gistId, userId, accessToken); 
+			
+	        return gist;
+		}	
+    }
 	
 	//Yksittäisen gistin hakeminen AJAX-kutsuna
 	@RequestMapping(value = "/singlegistajax", method = RequestMethod.GET,  produces = "application/json")

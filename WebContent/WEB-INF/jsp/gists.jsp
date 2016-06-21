@@ -74,7 +74,7 @@
   		<!-- Näytetään valittu gist -->
   		<div class="contentRight">
 			<!-- Yksittäisen gistin tiedostot -->
-			<div class="singleGistFiles">
+			<div class="activeGistFiles">
 				<!-- Gistin tiedot, nimi, kuvaus, tekijä jne. -->
 				<div class="gistInfo">
 					<img class="ownerAvatar" src=""><a id="toGist" href=""></a> 

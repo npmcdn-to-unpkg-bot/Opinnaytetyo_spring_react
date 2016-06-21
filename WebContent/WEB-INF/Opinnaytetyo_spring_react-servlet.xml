@@ -12,15 +12,14 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <!-- the application context definition for the springapp DispatcherServlet -->
 
-  <context:component-scan base-package="tatuputto.opinnaytetyo"/>
+  <context:component-scan base-package="tatuputto.opinnaytetyo" />
   
-  <mvc:annotation-driven/>
+  <mvc:annotation-driven />
 
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-  	<property name="prefix" value="/WEB-INF/jsp/"/>
-	<property name="suffix" value=".jsp"/>
+  	<property name="prefix" value="/WEB-INF/jsp/" />
+	<property name="suffix" value=".jsp" />
   </bean>
 
 </beans>
