@@ -23,6 +23,7 @@
     <url-pattern>/logout</url-pattern>
     <url-pattern>/authorize</url-pattern>
     <url-pattern>/getaccesstoken</url-pattern>
+    <url-pattern>/userinfo</url-pattern>
     <url-pattern>/gists</url-pattern>
     <url-pattern>/singlegist</url-pattern>
     <url-pattern>/singlegistajax</url-pattern>

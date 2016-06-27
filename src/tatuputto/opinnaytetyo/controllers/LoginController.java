@@ -1,6 +1,7 @@
 package tatuputto.opinnaytetyo.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -11,8 +12,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import tatuputto.opinnaytetyo.domain.Gist;
 import tatuputto.opinnaytetyo.domain.User;
 import tatuputto.opinnaytetyo.service.CheckAccessTokenCookie;
 import tatuputto.opinnaytetyo.service.GetAccessToken;
@@ -21,7 +26,7 @@ import tatuputto.opinnaytetyo.service.GetAccessToken;
 @Controller
 public class LoginController {
 	//Sovellukselle rekisteröidyt avaimet
-	public static final String clientId = "566fea61a0cebae27268";
+    public static final String clientId = "566fea61a0cebae27268";
 	public static final String clientSecret = "87454f258250d9170e31a8f13b51e6a612bd6545";
 	
 	private CheckAccessTokenCookie checkCookie;
@@ -59,6 +64,26 @@ public class LoginController {
 			return new ModelAndView("login");
 		}
 	}
+	
+	
+	@RequestMapping(value = "/userinfo", method = RequestMethod.GET,
+			headers="Accept=*/*", produces = "application/json")
+    public @ResponseBody String[] getUserInfo(HttpServletRequest request)
+            throws ServletException, IOException {
+
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			return null;
+		}
+		else {
+			String[] userInfo = {(String)session.getAttribute("login"), 
+					(String)session.getAttribute("avatar")};
+			
+			return userInfo;
+		}
+	}
+	
+	
 	
 
 	@RequestMapping("/authorize")
