@@ -11,7 +11,6 @@ export default class GistList extends React.Component {
 	
 	setActive(e) {
 		var id = e.target.id;
-		alert(id);
 		this.props.changeSelected(id);
 	}
 

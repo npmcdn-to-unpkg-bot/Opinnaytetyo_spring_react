@@ -28,7 +28,6 @@ export default class Gists extends React.Component {
 			contentType: "application/json",
 			dataType: 'json',
 			success: function(result) {
-				alert(result);
 		     	 this.setState({
 					gist: result
 				});		
@@ -37,11 +36,10 @@ export default class Gists extends React.Component {
 	} 
 
 
-		changeSelected = (id) => {
-			
-			this.setState({selectedGist: id});
-			this.getSingleGist(id); 
-		}
+	changeSelected(id) {
+		this.setState({selectedGist: id});
+		this.getSingleGist(id); 
+	}
 	
 	
 	
