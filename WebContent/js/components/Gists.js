@@ -8,37 +8,68 @@ export default class Gists extends React.Component {
 	
 	constructor() {
 		super();
-		this.changeSelected = this.changeSelected.bind(this);
+		this.changeActiveGist = this.changeActiveGist.bind(this);
+		this.getActiveGist = this.getActiveGist.bind(this);
+		this.navigate = this.navigate.bind(this);
 		this.state = {
-			gists: [],
-			selectedGist: "",
-			gist: null
+			fetch: "user",
+			gists: null,
+			activeGist: null,
+			activeGistId: null,
+			listLoading: true,
+			gistLoading: true
 		};
 	}	
 
 	
-	getSingleGist(id) {
+	changeActiveGist(id) {
+		this.setState({
+			gistLoading: true,
+			activeGistId: id
+		});
+		this.getActiveGist(id); 
+	}
+	
+	
+	getActiveGist(id) {
 		this.getGist = $.ajax({
 			headers: { 
 	        	'Accept': 'application/json',
 	       		'Content-Type': 'application/json' 
 	   		},
 			type: "GET",
-			url: "http://localhost:8080/Opinnaytetyo_spring_react/singlegist?id=" + id,
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/gist/" + id,
 			contentType: "application/json",
 			dataType: 'json',
 			success: function(result) {
 		     	 this.setState({
-					gist: result
+		     		activeGist: result,
+					gistLoading: false
 				});		
 	  		}.bind(this)
 		});
 	} 
 
 
-	changeSelected(id) {
-		this.setState({selectedGist: id});
-		this.getSingleGist(id); 
+	fetchNewGists() {
+		this.getNew = $.ajax({
+			headers: { 
+	        	"Accept": "application/json",
+	       		"Content-Type": "application/json" 
+	   		},
+			type: "GET",
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/gists?fetch=" + this.state.fetch,
+			contentType: "application/json",
+			dataType: "json",
+			success: function(result) {
+		      	this.setState({
+		      		listLoading: false,
+					gists: result,
+					activeGistId: result[0].id
+				});	
+				this.getActiveGist(result[0].id); 	
+	  		}.bind(this)
+		});
 	}
 	
 	
@@ -51,15 +82,16 @@ export default class Gists extends React.Component {
 	       		"Content-Type": "application/json" 
 	   		},
 			type: "GET",
-			url: "http://localhost:8080/Opinnaytetyo_spring_react/gists",
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/gists?fetch=" + this.state.fetch,
 			contentType: "application/json",
 			dataType: "json",
 			success: function(result) {
 		      	this.setState({
+		      		listLoading: false,
 					gists: result,
-					selectedGist: result[0].id
+					activeGistId: result[0].id
 				});	
-				this.getSingleGist(result[0].id); 	
+				this.getActiveGist(result[0].id); 	
 	  		}.bind(this)
 		});
 	}
@@ -69,17 +101,37 @@ export default class Gists extends React.Component {
 		this.getGists.abort();
 	}
 	
+	
+	navigate() {
+		if(this.state.fetch === "user") {
+			this.props.history.pushState(null, "/?fetch=all");
+			this.setState({fetch: "all"});
+			this.fetchNewGists();
+		}
+		else {
+			this.props.history.pushState(null, "/?fetch=user");
+			this.setState({fetch: "user"});
+			this.fetchNewGists();
+		}
+		
+	}
+	
 
 	render() {
 		return (			
 			<div>
+				<input type="button" value="Kaikki" onClick={this.navigate.bind(this)} />
+			
+			
 				<div className="contentLeft">
-					<GistList changeSelected={this.changeSelected} 
-							selectedGist={this.state.selectedGist} gists={this.state.gists} />	
+					<GistList changeActive={this.changeActiveGist} 
+							activeGistId={this.state.activeGistId} gists={this.state.gists} 
+							loading={this.state.listLoading} />	
 				</div>
 				
 				<div className="contentRight">
-					<ShowSelectedGist gist={this.state.gist} />
+					<ShowSelectedGist gist={this.state.activeGist} 
+							loading={this.state.gistLoading} />
 				</div>
 			</div>
 		);

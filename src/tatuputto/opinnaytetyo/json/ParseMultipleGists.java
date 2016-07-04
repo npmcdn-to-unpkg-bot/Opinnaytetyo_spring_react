@@ -47,7 +47,8 @@ public class ParseMultipleGists {
 					
 					//Jos gist on lisätty anonyyminä sitä ei lisätä listaan spämmin välttämiseksi
 					try {
-						String url = "http://localhost:8080/Opinnaytetyo_spring/singlegist?id=" + gistId;
+						//String url = "http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist?id=" + gistId;
+						String url = "http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/" + gistId;
 						User owner = parseGistOwnerInfo(singleGistObj.getJSONObject("owner"));
 						gists.add(new Gist(gistId, description, url, owner, parseNestedObjects(files)));
 					}

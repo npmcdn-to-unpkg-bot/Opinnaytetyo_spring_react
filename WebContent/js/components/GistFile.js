@@ -25,10 +25,6 @@ export default class GistFile extends React.Component {
 				</div>
 			
 				<div id={this.props.editorId}></div>
-				
-				
-				
-			
          	</div>
 	    );
 	}

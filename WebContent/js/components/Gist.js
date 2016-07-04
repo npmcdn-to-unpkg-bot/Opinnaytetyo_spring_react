@@ -20,7 +20,7 @@ export default class Gist extends React.Component {
 	       		"Content-Type": "application/json" 
 	   		},
 			type: "GET",
-			url: "http://localhost:8080/Opinnaytetyo_spring_react/singlegist?id=" + id,
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/gist?id=" + id,
 			contentType: "application/json",
 			dataType: "json",
 			success: function(result) {
