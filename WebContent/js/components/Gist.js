@@ -14,13 +14,18 @@ export default class Gist extends React.Component {
 	}
 	
 	componentWillMount() {
+		console.log(window.location.hash);
+		var url = window.location.hash.split('/');
+		var id = url[2];
+		console.log(id);
+		
 		this.getGist = $.ajax({
 			headers: { 
 	        	"Accept": "application/json",
 	       		"Content-Type": "application/json" 
 	   		},
 			type: "GET",
-			url: "http://localhost:8080/Opinnaytetyo_spring_react/gist?id=" + id,
+			url: "http://localhost:8080/Opinnaytetyo_spring_react/gist/" + id,
 			contentType: "application/json",
 			dataType: "json",
 			success: function(result) {

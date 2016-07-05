@@ -4,7 +4,7 @@ export default class SingleGist extends React.Component {
 
 	render() {
 		return (
-			<div className={this.props.selectedGist === this.props.id ? 
+			<div className={this.props.activeGistId === this.props.id ? 
 					"singleGist selected" : "singleGist"} 
 					id={this.props.id} onClick={this.props.setActive}>
 			

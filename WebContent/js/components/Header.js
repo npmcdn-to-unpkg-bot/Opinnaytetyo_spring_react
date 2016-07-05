@@ -48,7 +48,7 @@ export default class Header extends React.Component {
 					
 					<ul className="navmenu">
 						<li><Link to="/">Listaa gistit</Link></li>
-						<li><Link to="creategist">Luo uusi gist</Link></li>
+						<li><Link to="create">Luo uusi gist</Link></li>
 					</ul>
 				</div>	
 			</div>	
