@@ -1,6 +1,8 @@
 import React from "react";
-import {Link} from "react-router";
 import $ from "jquery";
+
+import UserInfo from "./Header/UserInfo";
+import NavMenu from "./Header/NavMenu";
 
 export default class Header extends React.Component {
 
@@ -23,7 +25,7 @@ export default class Header extends React.Component {
 			contentType: "application/json",
 			dataType: 'json',
 			success: function(result) {
-		     	 this.setState({
+		     	this.setState({
 					login: result[0],
 					avatarUrl: result[1]
 				});		
@@ -41,15 +43,9 @@ export default class Header extends React.Component {
 		return (
 			<div className="header">
 				<div className="headerContent">
-					<div className="userInfo">
-						{/*}<img src={this.state.avatarUrl} />*/}
-						<p>{this.state.login}</p>
-					</div>
-					
-					<ul className="navmenu">
-						<li><Link to="/">Listaa gistit</Link></li>
-						<li><Link to="create">Luo uusi gist</Link></li>
-					</ul>
+					<UserInfo login={this.state.login} 
+							avatarUrl={this.state.avatarUrl} />
+					<NavMenu />
 				</div>	
 			</div>	
 		);

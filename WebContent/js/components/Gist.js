@@ -1,8 +1,8 @@
 import React from "react";
 import $ from "jquery";
 
-import GistInfo from "./GistInfo";
-import GistFile from "./GistFile";
+import GistInfo from "./Reusable/GistInfo";
+import GistFile from "./Reusable/GistFile";
 
 export default class Gist extends React.Component {
 	

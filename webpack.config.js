@@ -1,8 +1,10 @@
 var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
+var path = require('path');
+
 
 module.exports = {
-    context: __dirname + "/WebContent/js",
+	context: path.join(__dirname, "/WebContent/js"),
     devtool: debug ? "inline-sourcemap" : null,
     entry: "./client.js",
     module: {
@@ -11,14 +13,16 @@ module.exports = {
 	        exclude: /(node_modules|bower_components)/,
 	        loader: 'babel-loader',
 	            query: {
+					//cacheDirectory: true, 
 	            	presets: ['react', 'es2015', 'stage-0'],
 	                plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
 	            }
 	        }]
     },
     output: {
-    path: __dirname + "/WebContent/js",
-    filename: "client.min.js"
+		path: __dirname + "/WebContent/js",
+		publicPath: "/assets/",
+    	filename: "client.min.js"
     },
     plugins: debug ? [] : [
         new webpack.optimize.DedupePlugin(),

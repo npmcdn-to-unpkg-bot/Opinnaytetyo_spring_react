@@ -5,7 +5,7 @@ import javax.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tatuputto.opinnaytetyo.controllers.LoginController;
+import tatuputto.opinnaytetyo.controllers.AccountController;
 import tatuputto.opinnaytetyo.dao.AuthorizedConnectionBasic;
 import tatuputto.opinnaytetyo.domain.User;
 import tatuputto.opinnaytetyo.json.ParseAuthorizationInfo;
@@ -60,8 +60,8 @@ public class CheckAccessTokenCookie {
 	
 	private void isValidAccessToken(String accessToken) {
 		//Liitetään urliin get-parametreiksi sovellukselle rekisteröity id ja secret
-		String id = LoginController.clientId;
-		String secret = LoginController.clientSecret;
+		String id = AccountController.clientId;
+		String secret = AccountController.clientSecret;
 		String url = "https://api.github.com/applications/" + id + "/tokens/" + accessToken + "";
 		
 		responseContent = connection.formConnection("GET", url, "", id, secret);

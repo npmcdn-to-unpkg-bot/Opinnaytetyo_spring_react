@@ -13,7 +13,7 @@ const application = document.getElementById('container');
 ReactDOM.render(
 	<Router history={hashHistory}>
 		<Route path="/" component={Layout}>
-			<IndexRoute component={Gists}></IndexRoute>
+			<IndexRoute component={CreateGist}></IndexRoute>
 			<Route path="gist/*" component={Gist}></Route>
 			<Route path="create" component={CreateGist}></Route>		
 		</Route>

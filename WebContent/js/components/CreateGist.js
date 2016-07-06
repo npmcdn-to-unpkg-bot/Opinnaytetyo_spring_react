@@ -1,8 +1,8 @@
 import React from "react";
 import $ from "jquery";
 
-import FileInfo from "./FileInfo";
-import Editor from "./Editor";
+import FileInfo from "./Reusable/FileInfo";
+import Editor from "./Reusable/Editor";
 
 export default class CreateGist extends React.Component {
 	
@@ -80,9 +80,10 @@ export default class CreateGist extends React.Component {
 					})} 
 					
 				</div>
-			
+				
 				<input type="button" value="Lisää tiedosto" onClick={this.addFile} />
 				<input type="button" value="Luo salainen gist" onClick={this.createGist} />
+				<input type="button" value="Luo julkinen gist" onClick="" />
 			</div>
 		);
 		
