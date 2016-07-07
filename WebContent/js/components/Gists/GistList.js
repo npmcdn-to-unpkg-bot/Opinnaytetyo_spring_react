@@ -3,16 +3,18 @@ import React from "react";
 import SingleGist from "./SingleGist";
 
 
-export default class GistList extends React.Component {
+class GistList extends React.Component {
 
 	constructor() {
 		super();
-		this.setActive = this.setActive.bind(this);
+		this.changeActiveGist = this.changeActiveGist.bind(this);
 	}
 	
-	setActive(e) {
+	changeActiveGist(e) {
 		var id = e.currentTarget.id;
-		this.props.changeActive(id);
+		if(id !== this.props.activeGistId) {
+			this.props.setActiveGist(id);
+		}
 	}
 
 	render() {
@@ -29,7 +31,7 @@ export default class GistList extends React.Component {
 					description={gist.description} 
 					ownerLogin={gist.owner.login} 
 					activeGistId={this.props.activeGistId}
-					setActive={this.setActive} 
+					changeActive={this.changeActiveGist} 
 				/>
     		);
 			
@@ -54,3 +56,5 @@ export default class GistList extends React.Component {
 	}
 
 }
+
+export default GistList;

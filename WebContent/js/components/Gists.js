@@ -2,14 +2,20 @@ import React from "react";
 import $ from "jquery";
 
 import GistList from "./Gists/GistList";
-import ShowSelectedGist from "./Gists/ShowSelectedGist";
+import ShowActiveGist from "./Gists/ShowActiveGist";
 
-export default class Gists extends React.Component {
+/**
+ * Gistien listausnäkymä
+ */
+class Gists extends React.Component {
 	
-	constructor(props, context) {
-		super(props, context);
-		
-		this.changeActiveGist = this.changeActiveGist.bind(this);
+	/**
+	 * Tuodaan propsit ja contexti, bindataan metodit 
+	 * Asetetaan komponentin alustava state
+	 */
+	constructor() {
+		super();
+		this.setActiveGist = this.setActiveGist.bind(this);
 		this.getActiveGist = this.getActiveGist.bind(this);
 		this.getGistsByAllUsers = this.getGistsByAllUsers.bind(this);
 		this.getGistsByUser = this.getGistsByUser.bind(this);
@@ -23,16 +29,11 @@ export default class Gists extends React.Component {
 		};
 	}	
 
-	 static contextTypes = {
-		 router: React.PropTypes.func.isRequired
-	 }
-
 	 
-
-	
-	
-	
-	changeActiveGist(id) {
+	/**
+	 * Vaihdetaan aktiivinen gist
+	 */
+	setActiveGist(id) {
 		this.setState({
 			gistLoading: true,
 			activeGistId: id
@@ -41,6 +42,9 @@ export default class Gists extends React.Component {
 	}
 	
 	
+	/**
+	 * Haetaan aktiiviseksi asetettu gist
+	 */
 	getActiveGist(id) {
 		this.getGist = $.ajax({
 			headers: { 
@@ -85,7 +89,9 @@ export default class Gists extends React.Component {
 	
 	
 	
-	/*Haetaan gistit jos komponentin mounttaus onnistui*/
+	/**
+	 * Haetaan alustavat gistit
+	 */
 	componentWillMount() {
 		this.getGists = $.ajax({
 			headers: { 
@@ -106,27 +112,46 @@ export default class Gists extends React.Component {
 				this.getActiveGist(result[0].id); 	
 	  		}.bind(this)
 		});
+		
 	}
-
-	/*Keskeytetään haku jos mounttaus epäonnistuu*/
+	
+	
+	/**
+	 * Keskeytetään gistien hakeminen jos 
+	 * komponentin liittäminen ei onnistu DOMiin
+	 */
 	componentWillUnmount() {
 		this.getGists.abort();
 	}
 	
 	
 	getGistsByAllUsers() {
-		this.context.router.push("/?fetch=all");
-		this.setState({fetch: "all"});
-		this.fetchNewGists("all");
+		if(this.state.fetch !== "all") {
+			this.context.router.push("/?fetch=all");
+			this.setState({
+				fetch: "all",
+				listLoading: true
+			});
+			this.fetchNewGists("all");
+		}
 	}
 	
 	getGistsByUser() {
-		this.context.router.push("/?fetch=user");
-		this.setState({fetch: "user"});
-		this.fetchNewGists("user");
+		if(this.state.fetch !== "user") {
+			this.context.router.push("/?fetch=user");
+			this.setState({
+				fetch: "user",
+				listLoading: true
+			});
+			this.fetchNewGists("user");
+		}	
 	}
 	
 
+	/**
+	 * Renderöidään lapsikomponentit: gistit sisältävä lista 
+	 * ja aktiivisen gistin sisältö
+	 */
 	render() {
 		return (			
 			<div>
@@ -140,7 +165,7 @@ export default class Gists extends React.Component {
 			
 				<div className="contentLeft">
 					<GistList 
-							changeActive={this.changeActiveGist} 
+							setActiveGist={this.setActiveGist} 
 							activeGistId={this.state.activeGistId} 
 							gists={this.state.gists} 
 							loading={this.state.listLoading} 
@@ -149,7 +174,7 @@ export default class Gists extends React.Component {
 				</div>
 				
 				<div className="contentRight">
-					<ShowSelectedGist 
+					<ShowActiveGist 
 							gist={this.state.activeGist} 
 							loading={this.state.gistLoading} 
 					/>
@@ -157,5 +182,13 @@ export default class Gists extends React.Component {
 			</div>
 		);
 	}
-
+	
 }
+
+
+Gists.contextTypes = {
+	    router: React.PropTypes.object.isRequired
+};
+
+
+export default Gists;

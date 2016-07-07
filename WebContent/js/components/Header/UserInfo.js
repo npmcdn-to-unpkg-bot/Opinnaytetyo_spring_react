@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class UserInfo extends React.Component {
+class UserInfo extends React.Component {
 	
 	render() {
 		return (
@@ -12,3 +12,5 @@ export default class UserInfo extends React.Component {
 	}
 	
 }
+ 
+export default UserInfo;

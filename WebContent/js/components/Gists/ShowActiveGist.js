@@ -3,7 +3,7 @@ import React from "react";
 import GistInfo from "../Reusable/GistInfo";
 import GistFile from "../Reusable/GistFile";
 
-export default class ShowSelectedGist extends React.Component {
+class ShowActiveGist extends React.Component {
 	
 	render() {
 		if(this.props.loading === true) {	
@@ -28,3 +28,5 @@ export default class ShowSelectedGist extends React.Component {
 	}
 	
 }
+
+export default ShowActiveGist;

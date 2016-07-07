@@ -3,8 +3,14 @@ import React from "react";
 import Header from "./Header";
 import Gists from "./Gists";
 
-export default class Layout extends React.Component {
+/**
+ * Kaikkien näkymien root komponentti
+ */
+class Layout extends React.Component {
 
+	/**
+	 * Renderöidään Header ja lapsi komponentit
+	 */
 	render() {
 		return (
 			<div className="content">
@@ -15,3 +21,5 @@ export default class Layout extends React.Component {
 	}
 
 }
+
+export default Layout;

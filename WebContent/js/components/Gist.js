@@ -4,7 +4,7 @@ import $ from "jquery";
 import GistInfo from "./Reusable/GistInfo";
 import GistFile from "./Reusable/GistFile";
 
-export default class Gist extends React.Component {
+class Gist extends React.Component {
 	
 	constructor() {
 		super();
@@ -62,4 +62,7 @@ export default class Gist extends React.Component {
 		}
 
 	}
+	
 }
+
+export default Gist;

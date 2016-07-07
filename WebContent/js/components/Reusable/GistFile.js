@@ -2,7 +2,7 @@ import React from "react";
 
 import Editor from "../Reusable/Editor";
 
-export default class GistFile extends React.Component {
+class GistFile extends React.Component {
 
 	componentDidMount() {
 		var lines = this.props.content.split("\n").length
@@ -30,4 +30,5 @@ export default class GistFile extends React.Component {
 	}
 	
 }
-	
+
+export default GistFile;

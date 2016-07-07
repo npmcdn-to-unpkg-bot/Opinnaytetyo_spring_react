@@ -1,7 +1,7 @@
 import React from "react";
 import AceEditor from "react-ace";
 
-export default class Editor extends React.Component {
+class Editor extends React.Component {
 	
 	componentDidMount() {
 		console.log(this.props.editorId)
@@ -20,3 +20,5 @@ export default class Editor extends React.Component {
 	}
 	
 }
+
+export default Editor;

@@ -4,7 +4,7 @@ import $ from "jquery";
 import UserInfo from "./Header/UserInfo";
 import NavMenu from "./Header/NavMenu";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
 
 	constructor() {
 		super();
@@ -52,3 +52,5 @@ export default class Header extends React.Component {
 	}
 
 }
+
+export default Header;

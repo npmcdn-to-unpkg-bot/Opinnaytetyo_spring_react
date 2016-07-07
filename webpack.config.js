@@ -13,11 +13,15 @@ module.exports = {
 	        exclude: /(node_modules|bower_components)/,
 	        loader: 'babel-loader',
 	            query: {
-					//cacheDirectory: true, 
 	            	presets: ['react', 'es2015', 'stage-0'],
 	                plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
 	            }
-	        }]
+	        },
+			{ 
+			test: /\.css$/, 
+			loader: "style-loader!css-loader" 
+			}
+		]	
     },
     output: {
 		path: __dirname + "/WebContent/js",

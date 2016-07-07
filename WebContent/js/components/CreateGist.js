@@ -4,8 +4,12 @@ import $ from "jquery";
 import FileInfo from "./Reusable/FileInfo";
 import Editor from "./Reusable/Editor";
 
-export default class CreateGist extends React.Component {
+
+class CreateGist extends React.Component {
 	
+	/**
+	 * dfafdsfsfsdfd
+	 */
 	constructor() {
 		super();
 		this.addFile = this.addFile.bind(this);
@@ -91,3 +95,5 @@ export default class CreateGist extends React.Component {
 	}
 	
 }
+
+export default CreateGist; 

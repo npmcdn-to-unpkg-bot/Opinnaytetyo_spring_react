@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export default class FileInfo extends React.Component {
+class FileInfo extends React.Component {
 	
 	render() {
 		if(this.props.removable === false) {
@@ -26,3 +26,5 @@ export default class FileInfo extends React.Component {
 	}
 	
 }
+
+export default FileInfo;
