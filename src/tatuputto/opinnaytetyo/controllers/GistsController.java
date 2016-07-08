@@ -70,7 +70,7 @@ public class GistsController {
     		HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-		String accessToken = "0c06cd44e2268bd6fb9ed000bc093ba8ed60154f"; 
+		String accessToken = "01544860c78cf55a62305a063350976a0c6b6914"; 
 		/*HttpSession session = request.getSession(false);
 		if(session == null) {
 			return null;
@@ -111,7 +111,7 @@ public class GistsController {
 		else {*/
 //			String accessToken = (String)session.getAttribute("accesstoken");
 //			int userId = (int)session.getAttribute("userid");
-		String accessToken = "0c06cd44e2268bd6fb9ed000bc093ba8ed60154f"; 
+		String accessToken = "01544860c78cf55a62305a063350976a0c6b6914"; 
 		int userId = 0;
 			Gist gist = singleGist.getGist(gistId, userId, accessToken); 
 			
@@ -139,7 +139,7 @@ public class GistsController {
 //		}
 //		else {
 //			String accessToken = (String)session.getAttribute("accesstoken");
-			String accessToken = "0c06cd44e2268bd6fb9ed000bc093ba8ed60154f";
+			String accessToken = "01544860c78cf55a62305a063350976a0c6b6914";
 			
 			String[] responseContent = createGist.create(data, accessToken);
 			return responseContent[0] + responseContent[1];

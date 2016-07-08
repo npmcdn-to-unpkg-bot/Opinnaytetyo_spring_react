@@ -4,17 +4,21 @@ import $ from "jquery";
 import FileInfo from "./Reusable/FileInfo";
 import Editor from "./Reusable/Editor";
 
+require("../../css/Header.css");
+require("../../css/CreateGist.css");
 
 class CreateGist extends React.Component {
 	
 	/**
-	 * dfafdsfsfsdfd
+	 * 
 	 */
 	constructor() {
 		super();
 		this.addFile = this.addFile.bind(this);
 		this.createGist = this.createGist.bind(this);
+		this.removeFile = this.removeFile.bind(this);
 		this.state = {
+			editorsCreated: 1,
 			editors: ["editor0"]
 		};
 		
@@ -24,10 +28,21 @@ class CreateGist extends React.Component {
 	addFile() {
 		this.setState({
 			editors: this.state.editors.concat(
-					["editor" + this.state.editors.length])
+					["editor" + this.state.editorsCreated]),
+			editorsCreated: this.state.editorsCreated + 1,
 		});
-
 	}
+	
+	
+	removeFile(id) {
+		var updatedEditors = this.state.editors;
+		updatedEditors.splice(updatedEditors.indexOf(id), 1);
+		
+		this.setState({
+			editors: updatedEditors
+		});
+	}
+	
 	
 	
 	createGist(isPublic) {
@@ -39,14 +54,14 @@ class CreateGist extends React.Component {
 		
 		for(var i = 0; i < fileFields.length; i++) {
 			var filename = $(fileFields[i]).find("input:text").val();
-			var source = ace.edit("editor" + i).getValue();
+			var source = ace.edit(this.state.editors[i]).getValue();
 				
 			var file = {filename: filename, content: source};
 			files[filename] = file;
 		}
 		
 		gist["description"] = description;
-		gist["ispublic"] = false;
+		gist["ispublic"] = isPublic;
 		gist["files"] = files;
 		console.log(JSON.stringify(gist));
 		
@@ -67,31 +82,33 @@ class CreateGist extends React.Component {
 	
 	render() {
 		var removable = this.state.editors.length === 1 ? false : true;
+		var fileFields = this.state.editors.map(function(editor, index) {
+			return (
+				<div className="gistFile" key={"file" + editor} >
+					<FileInfo key={"info" + editor} id={editor}
+							removable={removable} remove={this.removeFile} />
+								
+					<Editor key={editor} editorId={editor} />
+				</div>	
+			);
+		}, this); 
 		
-		console.log(removable);
+	
 		return (		
 			<div>
-				<input type="text" className="description" placeholder="Kuvaus"/>
+				<input type="text" className="description" placeholder="Kuvaus" />
 				<div className="files">
-				
-					{this.state.editors.map(function(editor, index) { 
-						return (
-							<div className="gistFile" key={"file" + index}>
-								<FileInfo key={"info" + index} removable={removable}/>
-								<Editor key={editor} editorId={editor} />
-							</div>	
-						);
-					})} 
-					
+					{fileFields}
 				</div>
 				
-				<input type="button" value="Lisää tiedosto" onClick={this.addFile} />
-				<input type="button" value="Luo salainen gist" onClick={this.createGist} />
-				<input type="button" value="Luo julkinen gist" onClick="" />
+				<input type="button" id="addFile" value="Lisää tiedosto" 
+						onClick={this.addFile} />
+				<input type="button" id="createSecret" value="Luo salainen gist" 
+						onClick={() => this.createGist(false)} />
+				<input type="button" id="createPublic" value="Luo julkinen gist"
+						onClick={() => this.createGist(true)} />
 			</div>
-		);
-		
-		
+		);	
 	}
 	
 }

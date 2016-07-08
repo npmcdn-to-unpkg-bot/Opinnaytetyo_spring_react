@@ -18,7 +18,8 @@ class FileInfo extends React.Component {
 					<input type="text"
 							placeholder="Tiedostonimi, esim. File.java" />
 			
-					<input type="button" className="removeFile" value="Poista" />
+					<input type="button" className="removeFile" value="Poista" 
+							onClick={() => this.props.remove(this.props.id)} /> 
 				</div>
 			);
 		}
