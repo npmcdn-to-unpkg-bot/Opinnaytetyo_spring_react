@@ -16,8 +16,8 @@ class ShowActiveGist extends React.Component {
 			
 			return (
 				<div className="showActiveGist">
-					<GistInfo name={this.props.gist.files[0].filename} description={this.props.gist.description} 
-							viewUrl={this.props.gist.viewUrl} owner={this.props.gist.owner.login} avatarUrl={this.props.gist.avatarUrl} />
+					<GistInfo id={this.props.id} name={this.props.gist.files[0].filename} description={this.props.gist.description} 
+							url={this.props.gist.viewUrl} owner={this.props.gist.owner.login} avatarUrl={this.props.gist.avatarUrl} />
 		
 					<div className="gistFiles">
 						{files}

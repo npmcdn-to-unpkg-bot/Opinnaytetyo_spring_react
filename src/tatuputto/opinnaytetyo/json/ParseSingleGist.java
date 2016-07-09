@@ -25,21 +25,20 @@ public class ParseSingleGist {
 	 */
 	public Gist parseJSON(String JSONresponse) {
 		try {
-			//Muodostetaan vastauksena saadusta String muotoisesta JSONinsta, JSON taulukko
-			JSONObject jObject = new JSONObject(JSONresponse);
-			 //Etsitään JSON oliosta gistin id
-			String gistId = jObject.getString("id");
-			//Etsitään JSON oliosta tiedoston kuvauksen sisältävä avain
-			String description = jObject.getString("description"); 
+			JSONObject singleGist = new JSONObject(JSONresponse);
+			
+			String gistId = singleGist.getString("id");
+			String description = singleGist.getString("description"); 
+			String createdAt = singleGist.getString("created_at");
 			
 			//Etsitään avain, joka sisältää gistin omistajan tiedot
-			JSONObject owner = jObject.getJSONObject("owner");
+			JSONObject owner = singleGist.getJSONObject("owner");
 			
 			//Etsitään avain, joka sisältää tiedostojen tarkemmat tiedot nested olioina
-			JSONObject files = jObject.getJSONObject("files");
+			JSONObject files = singleGist.getJSONObject("files");
 
 			String url = "http://localhost:8080/Opinnaytety_spring/editgist?id=" + gistId;
-			Gist gist = new Gist(gistId, description, url, parseGistOwnerInfo(owner), parseFileObjects(files));
+			Gist gist = new Gist(gistId, description, url, parseGistOwnerInfo(owner), createdAt, parseFileObjects(files));
 			
 			return gist;
 		}

@@ -37,7 +37,7 @@ input[type="button"]:hover {
 }
 	
 	
-.content {
+.gists {
 	/*width: 90%;*/
     margin-right: auto;
     margin-left: auto;
@@ -73,10 +73,13 @@ input[type="button"]:hover {
 	height: 100%;
 	overflow-y: scroll;
 	background-color: whitesmoke;
+	list-style-type: none;
+	padding:0;
+	margin:0;
 }
 
 .singleGist {
-	height: 100px;
+	/*height: 100px;*/
 	cursor: pointer;
 	/*border-style: solid;*/
 	border-radius: 4px;
@@ -85,13 +88,20 @@ input[type="button"]:hover {
 	margin-top: 2px;
 }
 
-.singleGistContainer {
+.contentWrapper {
 	padding: 10px;
+	min-height: 100px;
 }
 
 
-.selected {
-	background-color: #21e054;
+.description {
+	display: block;
+	min-height: 60px;
+}
+
+
+.active {
+	background-color: wheat;
 }
 
 
@@ -104,7 +114,7 @@ input[type="button"]:hover {
 }
 
 
-.description {
+.singleGist .description {
 	font-size: 14px;
 }
 
@@ -143,14 +153,31 @@ input[type="button"]:hover {
     margin-left: auto;
     margin-right: auto;
     width: 98%;
-	height: 40px;	
+	height: 100px;	
 }
 
-.gistInfo img {
-	width: 30px;
-    float: left;
-    margin-top: 5px;
+
+
+
+
+
+
+.nameOwnerButtons img{
+	height: 40px;
+	background: wheat;
 }
+
+.desc {
+	
+}
+
+
+
+
+
+
+
+
 
 #viewGist {
 	font-size: 16px;
@@ -206,7 +233,11 @@ input[type="button"]:hover {
 	margin-bottom: 20px;
 }
 
-.gistFile {
+.showActiveGist .gistFiles {
+	
+}
+
+.showActiveGist .gistFile {
 	width: 98%;
     margin-left: auto;
     margin-right: auto;
@@ -216,10 +247,10 @@ input[type="button"]:hover {
 	border-radius: 4px;
 	background-color: white;
 	padding-bottom: 4px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
-div[id^="editor"] {
+.showActiveGist div[id^="editor"] {
 	width: 99%;
     margin-left: auto;
     margin-right: auto;
@@ -229,6 +260,33 @@ div[id^="editor"] {
 }
 
 .loading {
-	background: url(../images/loading.gif) no-repeat center center;
+	background: url(http://localhost:8080/Opinnaytetyo_spring_react/images/loading.gif) no-repeat center center;
 	height: 90%;
 }
+
+
+
+.language {
+	display: inline;
+    float: right;
+    background: orange;
+    font-size: 14px;
+}
+
+.created {
+	display: inline;
+    float: left;
+	font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

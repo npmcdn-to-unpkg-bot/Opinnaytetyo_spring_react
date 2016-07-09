@@ -17,6 +17,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "jquery": "^3.0.0",
+    "json-loader": "^0.5.4",
     "react": "^15.1.0",
     "react-ace": "^3.4.1",
     "react-dom": "^15.1.0",

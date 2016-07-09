@@ -4,13 +4,21 @@ import $ from "jquery";
 import GistList from "./Gists/GistList";
 import ShowActiveGist from "./Gists/ShowActiveGist";
 
+require("../../css/Header.css");
+require("../../css/Gists.css");
+
+//Ladataan värikoodit ohjelmointikielille
+var colors = require("../../static/colors.json");
+
+
 /**
  * Gistien listausnäkymä
  */
 class Gists extends React.Component {
 	
+	
 	/**
-	 * Tuodaan propsit ja contexti, bindataan metodit 
+	 * Tuodaan propsit ja konteksti, bindataan metodit 
 	 * Asetetaan komponentin alustava state
 	 */
 	constructor() {
@@ -27,6 +35,8 @@ class Gists extends React.Component {
 			listLoading: true,
 			gistLoading: true
 		};
+		
+		console.log(colors["JavaScript"].color);
 	}	
 
 	 
@@ -154,7 +164,7 @@ class Gists extends React.Component {
 	 */
 	render() {
 		return (			
-			<div>
+			<div className="gists">
 				<input type="button" value="All" 
 						onClick={this.getGistsByAllUsers} 
 				/>
@@ -167,7 +177,8 @@ class Gists extends React.Component {
 					<GistList 
 							setActiveGist={this.setActiveGist} 
 							activeGistId={this.state.activeGistId} 
-							gists={this.state.gists} 
+							gists={this.state.gists}
+							colors={colors}
 							loading={this.state.listLoading} 
 							fetchMethod={this.state.fetch}
 					/>	
@@ -175,6 +186,7 @@ class Gists extends React.Component {
 				
 				<div className="contentRight">
 					<ShowActiveGist 
+							id={this.state.activeGistId}
 							gist={this.state.activeGist} 
 							loading={this.state.gistLoading} 
 					/>

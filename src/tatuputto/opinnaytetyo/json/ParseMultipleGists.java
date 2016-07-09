@@ -36,21 +36,22 @@ public class ParseMultipleGists {
 			for (int i = 0; i < arr.length(); i++) {
 				try {
 					//Muodostetaan jokaisesta taulukon indeksistä JSON-olio, indeksi == gist
-					JSONObject singleGistObj = arr.getJSONObject(i); 
+					JSONObject singleGist = arr.getJSONObject(i); 
 				
-					String gistId = singleGistObj.getString("id");
-					String description = singleGistObj.getString("description"); 
+					String gistId = singleGist.getString("id");
+					String description = singleGist.getString("description"); 
+					String createdAt = singleGist.getString("created_at");
 			
 					//Etsitään olio, joka sisältää gistin tiedostot
-					JSONObject files = singleGistObj.getJSONObject("files"); 
+					JSONObject files = singleGist.getJSONObject("files"); 
 					
 					
 					//Jos gist on lisätty anonyyminä sitä ei lisätä listaan spämmin välttämiseksi
 					try {
 						//String url = "http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist?id=" + gistId;
 						String url = "http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/" + gistId;
-						User owner = parseGistOwnerInfo(singleGistObj.getJSONObject("owner"));
-						gists.add(new Gist(gistId, description, url, owner, parseNestedObjects(files)));
+						User owner = parseGistOwnerInfo(singleGist.getJSONObject("owner"));
+						gists.add(new Gist(gistId, description, url, owner, createdAt, parseNestedObjects(files)));
 					}
 					catch(JSONException e) {
 						//owner = new User("Anonymous", "https://avatars.githubusercontent.com/u/5699778?v=3");
