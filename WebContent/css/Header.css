@@ -12,6 +12,7 @@
 }
 
 .userInfo img {
+	position: absolute;
 	float: left;
 	width: 30px;
 	height: 30px; 

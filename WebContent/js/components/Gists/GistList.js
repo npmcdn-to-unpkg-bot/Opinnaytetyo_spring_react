@@ -2,14 +2,20 @@ import React from "react";
 
 import SingleGist from "./SingleGist";
 
-
+/**
+ * Lista komponentti, joka sisältää gistit
+ */
 class GistList extends React.Component {
 
 	constructor() {
 		super();
 		this.changeActiveGist = this.changeActiveGist.bind(this);
+		this.getColorCode = this.getColorCode.bind(this);
 	}
 	
+	/**
+	 * Lähetetään aktiiviseksi vaihdettavan gistin id
+	 */
 	changeActiveGist(e) {
 		var id = e.currentTarget.id;
 		if(id !== this.props.activeGistId) {
@@ -17,8 +23,24 @@ class GistList extends React.Component {
 		}
 	}
 
-	render() {
+	
+	/**
+	 * Haetaan kielelle määrietty värikoodi
+	 */
+	getColorCode(language) {
+		try {
+			var colorCode = this.props.colors[language].color;
+		}
+		catch(error) {
+			var colorCode = "#D0D0D0";
+		}
 		
+		return colorCode;
+	}
+	
+	
+	
+	render() {
 		//Näytetään latausindikaattori jos lataus on kesken
 		if(this.props.loading === true) {
     		return <div className="loading"></div>; 
@@ -27,18 +49,7 @@ class GistList extends React.Component {
 		 *luodaan arvojen pohjalta singlegist komponentteja
 		 */
     	else {
-    		var color = this.props.colors
-    		
     		var gists = this.props.gists.map(function(gist) {
-    			var langColor = "#D0D0D0";
-    			try {
-    				langColor = color[gist.files[0].language].color;
-    			}
-    			catch(error) {
-    				console.log(error);
-    			}
-    		
-  
     			return (
 					<SingleGist 
 						key={gist.id} 
@@ -46,7 +57,7 @@ class GistList extends React.Component {
 						name={gist.files[0].filename} 
 						description={gist.description} 
 						language={gist.files[0].language}
-						color={langColor}
+						color={this.getColorCode(gist.files[0].language)}
 						created={gist.createdAt}
 						url={gist.url}
 						owner={gist.owner.login} 

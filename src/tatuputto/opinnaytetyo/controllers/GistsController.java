@@ -36,7 +36,7 @@ import tatuputto.opinnaytetyo.service.GetSingleGistAJAX;
  */
 @Controller
 public class GistsController {
-	public String accessToken = "";
+	public String accessToken = "70686fd1fa4e43ef3c2895a155f9bf766cd92b9a";
 	private GetGists gists;
 	private GetSingleGist singleGist;
 	private CreateGist createGist;

@@ -75,7 +75,10 @@ public class AccountController {
 		HttpSession session = request.getSession(false);
 		if(session == null) {
 			
-			String[] userInfo = {"TatuPutto", ""};
+			String[] userInfo = {
+				"TatuPutto",
+				"http://www.m2woman.co.nz/wp-content/uploads/2016/06/Triumphant-Hedgehog.jpg"
+			};
 			
 			return userInfo;
 			//return null;

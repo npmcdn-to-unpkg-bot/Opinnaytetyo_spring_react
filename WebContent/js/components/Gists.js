@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 
+import Filters from "./Filters";
 import GistList from "./Gists/GistList";
 import ShowActiveGist from "./Gists/ShowActiveGist";
 
@@ -27,16 +28,16 @@ class Gists extends React.Component {
 		this.getActiveGist = this.getActiveGist.bind(this);
 		this.getGistsByAllUsers = this.getGistsByAllUsers.bind(this);
 		this.getGistsByUser = this.getGistsByUser.bind(this);
+		this.toggleFilterView = this.toggleFilterView.bind(this);
 		this.state = {
 			fetch: "user",
 			gists: null,
 			activeGist: null,
 			activeGistId: null,
 			listLoading: true,
-			gistLoading: true
+			gistLoading: true,
+			filtersOpen: false
 		};
-		
-		console.log(colors["JavaScript"].color);
 	}	
 
 	 
@@ -157,6 +158,20 @@ class Gists extends React.Component {
 		}	
 	}
 	
+	toggleFilterView() {
+		if(this.state.filtersOpen === false) {
+			this.setState({
+				filtersOpen: true,
+			});
+		}
+		else {
+			this.setState({
+				filtersOpen: false,
+			});
+		}
+	}
+	
+	
 
 	/**
 	 * Renderöidään lapsikomponentit: gistit sisältävä lista 
@@ -165,14 +180,9 @@ class Gists extends React.Component {
 	render() {
 		return (			
 			<div className="gists">
-				<input type="button" value="All" 
-						onClick={this.getGistsByAllUsers} 
-				/>
+				<Filters isOpen={this.state.filtersOpen}
+					open={this.toggleFilterView} />
 				
-				<input type="button" value="Users" 
-						onClick={this.getGistsByUser} 
-				/>
-			
 				<div className="contentLeft">
 					<GistList 
 							setActiveGist={this.setActiveGist} 

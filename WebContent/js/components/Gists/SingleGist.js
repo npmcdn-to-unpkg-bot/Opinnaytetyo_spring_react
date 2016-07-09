@@ -2,7 +2,15 @@ import React from "react";
 
 class SingleGist extends React.Component {
 	
+	
+	
+	
 	render() {
+		var description = this.props.description; 
+		if(description.length > 150) {
+			description = description.substring(0, 150) + "...";
+		}
+		
 		var spanStyle= {background: this.props.color};
 		
 		var active = this.props.activeGistId === this.props.id ? 
@@ -19,7 +27,7 @@ class SingleGist extends React.Component {
 					</span>
 							
 					<span className="description">
-						{this.props.description}
+						{description}
 					</span>
 					
 					<span className="created">
@@ -31,7 +39,7 @@ class SingleGist extends React.Component {
 					</span>
 				</div>
 			</li>
-		)
+		);
 	}
 }
 
