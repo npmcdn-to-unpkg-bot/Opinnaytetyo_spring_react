@@ -49,7 +49,7 @@ class GistList extends React.Component {
 		 *luodaan arvojen pohjalta singlegist komponentteja
 		 */
     	else {
-    		var gists = this.props.gists.map(function(gist) {
+    		var gists = this.props.gists.map(gist => {
     			return (
 					<SingleGist 
 						key={gist.id} 

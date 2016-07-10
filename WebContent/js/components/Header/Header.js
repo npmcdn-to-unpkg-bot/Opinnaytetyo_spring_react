@@ -1,8 +1,8 @@
 import React from "react";
 import $ from "jquery";
 
-import UserInfo from "./Header/UserInfo";
-import NavMenu from "./Header/NavMenu";
+import UserInfo from "./UserInfo";
+import NavMenu from "./NavMenu";
 
 class Header extends React.Component {
 

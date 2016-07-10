@@ -1,7 +1,7 @@
 import React from "react";
 
-import Header from "./Header";
-import Gists from "./Gists";
+import Header from "./Header/Header";
+import Gists from "./Listing/Gists";
 
 /**
  * Kaikkien näkymien root komponentti

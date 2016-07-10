@@ -29,12 +29,11 @@ public class Gist {
 	
 	public Gist(String id, String description, String url, User owner, 
 			String createdAt, ArrayList<GistFile> files) {
-		setCreatedAt(createdAt);
 		this.id = id;
 		this.description = description;
 		this.url = url;
 		this.owner = owner;
-		this.createdAt = getCreatedAt();
+		this.createdAt = createdAt;
 		this.files = files;
 	}
 	

@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import {Router, Route, IndexRoute, Link, hashHistory} from "react-router";
 
 import Layout from "./components/Layout";
-import Gists from "./components/Gists";
+import Gists from "./components/Listing/Gists";
 import Gist from "./components/Gist";
-import CreateGist from "./components/CreateGist";
+import CreateGist from "./components/CreateGist/CreateGist";
 
 const application = document.getElementById('container');
 

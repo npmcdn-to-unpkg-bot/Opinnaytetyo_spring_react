@@ -1,11 +1,11 @@
 import React from "react";
 import $ from "jquery";
 
-import FileInfo from "./Reusable/FileInfo";
-import Editor from "./Reusable/Editor";
+import FileInfo from "../Reusable/FileInfo";
+import Editor from "../Reusable/Editor";
 
-require("../../css/Header.css");
-require("../../css/CreateGist.css");
+require("../../../css/Header.css");
+require("../../../css/CreateGist.css");
 
 class CreateGist extends React.Component {
 	
@@ -60,6 +60,7 @@ class CreateGist extends React.Component {
 			files[filename] = file;
 		}
 		
+	
 		gist["description"] = description;
 		gist["ispublic"] = isPublic;
 		gist["files"] = files;
@@ -82,7 +83,7 @@ class CreateGist extends React.Component {
 	
 	render() {
 		var removable = this.state.editors.length === 1 ? false : true;
-		var fileFields = this.state.editors.map(function(editor, index) {
+		var fileFields = this.state.editors.map((editor, index) => {
 			return (
 				<div className="gistFile" key={"file" + editor} >
 					<FileInfo key={"info" + editor} id={editor}
