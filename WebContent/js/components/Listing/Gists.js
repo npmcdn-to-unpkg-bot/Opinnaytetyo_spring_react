@@ -24,8 +24,6 @@ const SAMPLEDATA = [
 ];
 
 
-
-
 /**
  * Gistien listausnäkymä
  */

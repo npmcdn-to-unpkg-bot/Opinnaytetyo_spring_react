@@ -4,7 +4,7 @@ var path = require('path');
 
 
 module.exports = {
-	context: path.join(__dirname, "/WebContent/js"),
+	context: path.join(__dirname, "/WebContent/js/App"),
     devtool: debug ? "inline-sourcemap" : null,
     entry: "./client.js",
     module: {
@@ -26,7 +26,7 @@ module.exports = {
 		]	
     },
     output: {
-		path: __dirname + "/WebContent/js",
+		path: __dirname + "/WebContent/js/App",
 		publicPath: "/assets/",
     	filename: "client.min.js"
     },

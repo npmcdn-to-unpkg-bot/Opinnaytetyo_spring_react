@@ -7,6 +7,7 @@ import Gists from "./components/Listing/Gists";
 import Gist from "./components/Gist";
 import CreateGist from "./components/CreateGist/CreateGist";
 
+
 const application = document.getElementById('container');
 
 
