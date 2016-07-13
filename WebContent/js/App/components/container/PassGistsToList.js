@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { changeGist } from '../../actions/actions';
+
 import GistList from "../presentational/GistList";
 
+require("../../../../css/Gists.css");
 
 const mapStateToProps = (state) => {
 	console.log(state.default.gists)

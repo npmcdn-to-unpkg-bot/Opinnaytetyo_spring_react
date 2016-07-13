@@ -7,7 +7,7 @@ class SingleGist extends React.Component {
 	
 	render() {
 		var description = this.props.description; 
-		if(description.length > 150) {
+		if(description !== null && description.length > 150) {
 			description = description.substring(0, 150) + "...";
 		}
 		

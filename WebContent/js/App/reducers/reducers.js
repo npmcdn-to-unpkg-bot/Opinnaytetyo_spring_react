@@ -1,5 +1,7 @@
+import * as types from '../actions/actionTypes';
+
 const SAMPLEDATA = [
-{"id":"6c8fef654c46d526a1244f0b1c182793","description":"Programming language colors","url":"http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/6c8fef654c46d526a1244f0b1c182793","owner":{"id":5699778,"login":"TatuPutto","avatarUrl":"https://avatars.githubusercontent.com/u/5699778?v=3","accessToken":null},"createdAt":"2016-07-09T10:51:12Z","files":[{"filename":"colors.json","language":"JSON","rawUrl":"https://gist.githubusercontent.com/TatuPutto/6c8fef654c46d526a1244f0b1c182793/raw/b1dc698101707f107d10bf9c7c562a3b08986e40/colors.json","content":null}],"ownedByCurrentUser":false},
+{"id":"6c8fef654c46d526a1244f0b1c182793","description":"Programming language colors","url":"http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/6c8fef654c46d526a1244f0b1c182793","owner":{"id":5699778,"login":"TatuPutto","avatarUrl":"https://avatars.githubusercontent.com/u/5699778?v=3","accessToken":null},"createdAt":"2016-07-09T10:51:12Z","files":[{"filename":"colors.json","language":"JSON","rawUrl":"https://gist.githubusercontent.com/TatuPutto/6c8fef654c46d526a1244f0b1c182793/raw/b1dc698101707f107d10bf9c7c562a3b08986e40/colors.json","content":"class HelloWorld\n   def initialize(name)\n      @name = name.capitalize\n   end\n   def sayHi\n      puts \"Hello #{@name}!\"\n   end\nend\n\nhello = HelloWorld.new(\"World\")\nhello.sayHi"}],"ownedByCurrentUser":false},
 {"id":"ac8d3d0b270719ab10106c31f62ec444","description":"Vie parametreja metodikutsussa react lapsikomponentista.","url":"http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/ac8d3d0b270719ab10106c31f62ec444","owner":{"id":5699778,"login":"TatuPutto","avatarUrl":"https://avatars.githubusercontent.com/u/5699778?v=3","accessToken":null},"createdAt":"2016-07-08T14:17:15Z","files":[{"filename":"PassParameters.js","language":"JavaScript","rawUrl":"https://gist.githubusercontent.com/TatuPutto/ac8d3d0b270719ab10106c31f62ec444/raw/b823d55b2b680a78b6ab47c362db670ad7ed9c8d/PassParameters.js","content":null}],"ownedByCurrentUser":false},
 {"id":"3c3b586ccb0f2699a4ce50fd19364ce3","description":"Kontekstin tuominen komponenttiin es6","url":"http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/3c3b586ccb0f2699a4ce50fd19364ce3","owner":{"id":5699778,"login":"TatuPutto","avatarUrl":"https://avatars.githubusercontent.com/u/5699778?v=3","accessToken":null},"createdAt":"2016-07-07T08:56:07Z","files":[{"filename":"MyComp.js","language":"JavaScript","rawUrl":"https://gist.githubusercontent.com/TatuPutto/3c3b586ccb0f2699a4ce50fd19364ce3/raw/914c0f9d965b574482b5d5a2cb3a2c5aec968bc6/MyComp.js","content":null}],"ownedByCurrentUser":false},
 {"id":"c7e46cc749361804cebfd02100e24d56","description":"React component es6 proptypes","url":"http://localhost:8080/Opinnaytetyo_spring_react/static/index.html#/gist/c7e46cc749361804cebfd02100e24d56","owner":{"id":5699778,"login":"TatuPutto","avatarUrl":"https://avatars.githubusercontent.com/u/5699778?v=3","accessToken":null},"createdAt":"2016-07-07T08:54:49Z","files":[{"filename":"Contacts.js","language":"JavaScript","rawUrl":"https://gist.githubusercontent.com/TatuPutto/c7e46cc749361804cebfd02100e24d56/raw/d0fb59dd3b6673e33236d9d362dfe1473eb35de3/Contacts.js","content":null}],"ownedByCurrentUser":false},
@@ -13,24 +15,23 @@ const SAMPLEDATA = [
 //Asetetaan sovelluksen alustava state
 const initialState = {
 	gists: SAMPLEDATA,
-	activeGist: SAMPLEDATA[0].description,
-	isLoading: false,
-	removeCurrent: false 
+	activeGist: SAMPLEDATA[0],
+	isLoading: false
 };
 
 
-//Reducer
-const changeGist = (state = initialState, action) => {
+//Gisteihin liittyvät actionit
+const gists = (state = initialState, action) => {
 	switch(action.type) {
-		case "REQUEST_GIST":
+		case types.FETCH_GISTS_REQUEST:
 			return Object.assign({}, state, {
-				isLoading: true,
-				removeCurrent: true 
+				isLoading: true
 			});
 			break;
-		case "RECEIVE_GIST":
+		case types.FETCH_GISTS_SUCCESS:
 			return Object.assign({}, state, {
-				activeGist: action.activeGist
+				activeGist: action.activeGist,
+				gists: action.gists
 			});
 			break;
 		default:
@@ -39,4 +40,4 @@ const changeGist = (state = initialState, action) => {
 }
 
 
-export default changeGist;
+export default gists;
