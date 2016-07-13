@@ -1,5 +1,5 @@
 import React from 'react';
-import GistListItem from "./GistListItem";
+import GistListItem from './GistListItem';
 
 class GistList extends React.Component {
 
@@ -28,7 +28,7 @@ class GistList extends React.Component {
 			var colorCode = this.props.colors[language].color;
 		}
 		catch(error) {
-			var colorCode = "#D0D0D0";
+			var colorCode = '#D0D0D0';
 		}
 		
 		return colorCode;
@@ -39,7 +39,7 @@ class GistList extends React.Component {
 	render() {
 		//Näytetään latausindikaattori jos lataus on kesken
 		if(this.props.loading === true) {
-    		return <div className="loading"></div>; 
+    		return <div className='loading'></div>; 
 		}
 		/*Puretaan gistit sisältävä taulukko ja 
 		 *luodaan arvojen pohjalta singlegist komponentteja
@@ -63,19 +63,23 @@ class GistList extends React.Component {
     			);
     		}, this); 
 			
-    		if(this.props.fetchMethod !== "all") {
+    		if(this.props.fetchMethod !== 'all') {
 				return (
-					<ul className="listGists">
-						{gists}
-					</ul>
+					<div className='contentLeft'>
+						<ul className='listGists'>
+							{gists}
+						</ul>
+					</div>
 				);
     		}
     		else {
     			return (
-					<ul className="listGists">
-						{gists}
-						<input type="button" id="loadMore" value="Lataa lisaa" />
-					</ul>
+    				<div className='contentLeft'>
+						<ul className='listGists'>
+							{gists}
+							<input type='button' id='loadMore' value='Lataa lisaa' />
+						</ul>
+					</div>		
 				);
     		}
     	}

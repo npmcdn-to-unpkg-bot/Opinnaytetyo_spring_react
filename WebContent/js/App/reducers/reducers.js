@@ -15,7 +15,7 @@ const SAMPLEDATA = [
 //Asetetaan sovelluksen alustava state
 const initialState = {
 	gists: SAMPLEDATA,
-	activeGist: SAMPLEDATA[0],
+	activeGist: null,
 	isLoading: false
 };
 
@@ -30,8 +30,19 @@ const gists = (state = initialState, action) => {
 			break;
 		case types.FETCH_GISTS_SUCCESS:
 			return Object.assign({}, state, {
+				gists: action.gists,
+				isLoading: false
+			});
+			break;
+		case types.FETCH_GISTS_FAILURE:
+			return Object.assign({}, state, {
+				gists: action.gists,
+				isLoading: false
+			});
+			break;
+		case types.FETCH_ACTIVE_GIST_SUCCESS:
+			return Object.assign({}, state, {
 				activeGist: action.activeGist,
-				gists: action.gists
 			});
 			break;
 		default:
