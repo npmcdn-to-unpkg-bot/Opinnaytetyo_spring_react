@@ -7,16 +7,12 @@ class ShowActiveGist extends React.Component {
 	
 
 	render() {
-		var { activeGist } = this.props;
 		
-		
-		
-		if(activeGist === null) {	
-			//return <div  className="loading"></div>;	
-			return <div></div>;	
+		if(this.props.isLoadingList === false && this.props.isLoadingActive === true) {	
+			return <div className="loading"></div>;	
 		}
-		else {
-			var files = activeGist.files.map((file, index) => {
+		else if(this.props.gist !== null && this.props.isLoadingList === false && this.props.isLoadingActive === false) {	
+			var files = this.props.gist.files.map((file, index) => {
 				return (
 					<GistFile 
 						key={file.filename} 
@@ -28,23 +24,24 @@ class ShowActiveGist extends React.Component {
 			});
 			
 			return (
-				<div className='contentRight'>
-					<div className='showActiveGist'>
-						<GistInfo 
-							id={this.props.id} 
-							name={activeGist.files[0].filename} 
-							description={activeGist.description} 
-							url={activeGist.viewUrl} 
-							owner={activeGist.owner.login} 
-							avatarUrl={activeGist.avatarUrl} 
-						/>
-			
-						<div className='gistFiles'>
-							{files}
-						</div>
+				<div className='showActiveGist'>
+					<GistInfo 
+						id={this.props.id} 
+						name={this.props.gist.files[0].filename} 
+						description={this.props.gist.description} 
+						url={this.props.gist.viewUrl} 
+						owner={this.props.gist.owner.login} 
+						avatarUrl={this.props.gist.avatarUrl} 
+					/>
+		
+					<div className='gistFiles'>
+						{files}
 					</div>
 				</div>
 	   	 	);
+		}
+		else {
+			return <div className='contentRight'></div>;
 		}
 	}
 	

@@ -4,7 +4,7 @@ export function parseFiles(json) {
 	for (var key in json) {
 		var singleFile = {};
 		singleFile["filename"] = json[key].filename;
-		singleFile["description"] = json[key].language;
+		singleFile["language"] = json[key].language;
 		
 		files.push(singleFile);
 	}

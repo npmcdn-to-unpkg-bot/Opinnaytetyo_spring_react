@@ -162,9 +162,6 @@ input[type="button"]:hover {
 
 
 
-
-
-
 .nameOwnerButtons img{
 	height: 40px;
 	background: wheat;
@@ -228,7 +225,7 @@ input[type="button"]:hover {
 	color: black;
 }
 
-##forkGist:hover {
+#forkGist:hover {
 	background: #A9A4A4;
 }
 
@@ -246,7 +243,8 @@ input[type="button"]:hover {
 }
 
 .showActiveGist .gistFiles {
-	
+	/*overflow-y: scroll;
+	height: 80%;*/
 }
 
 .showActiveGist .gistFile {
@@ -272,7 +270,8 @@ input[type="button"]:hover {
 }
 
 .loading {
-	background: url(http://localhost:8080/Opinnaytetyo_spring_react/images/loading.gif) no-repeat center center;
+	/*background: url(http://localhost:9090/Opinnaytetyo_spring_react/images/loading.gif) no-repeat center center;*/
+	background: url(http://localhost:9090/images/loading.gif) no-repeat center center;
 	height: 90%;
 }
 

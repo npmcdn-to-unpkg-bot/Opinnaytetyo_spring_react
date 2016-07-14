@@ -16,7 +16,7 @@ class GistListItem extends React.Component {
 					
 		return (
 			<li className={active} 
-					id={this.props.id} onClick={this.props.changeActive}>
+					id={this.props.id} onClick={this.props.setActive}>
 			
 				<div className="contentWrapper">
 					<span className="title">

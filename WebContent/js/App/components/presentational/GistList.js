@@ -1,22 +1,15 @@
 import React from 'react';
 import GistListItem from './GistListItem';
 
+
+//Ladataan värikoodit ohjelmointikielille
+const COLORS = require("../../../../static/colors.json");
+
 class GistList extends React.Component {
 
 	constructor() {
 		super();
-		this.changeActiveGist = this.changeActiveGist.bind(this);
 		this.getColorCode = this.getColorCode.bind(this);
-	}
-	
-	/**
-	 * Lähetetään aktiiviseksi vaihdettavan gistin id
-	 */
-	changeActiveGist(e) {
-		var id = e.currentTarget.id;
-		if(id !== this.props.activeGistId) {
-			this.props.setActiveGist(id);
-		}
 	}
 
 	
@@ -25,7 +18,7 @@ class GistList extends React.Component {
 	 */
 	getColorCode(language) {
 		try {
-			var colorCode = this.props.colors[language].color;
+			var colorCode = COLORS[language].color;
 		}
 		catch(error) {
 			var colorCode = '#D0D0D0';
@@ -37,8 +30,9 @@ class GistList extends React.Component {
 	
 	
 	render() {
+		console.log(this.props.isLoading)
 		//Näytetään latausindikaattori jos lataus on kesken
-		if(this.props.loading === true) {
+		if(this.props.isLoading === true) {
     		return <div className='loading'></div>; 
 		}
 		/*Puretaan gistit sisältävä taulukko ja 
@@ -54,32 +48,28 @@ class GistList extends React.Component {
 						description={gist.description} 
 						language={gist.files[0].language}
 						color={this.getColorCode(gist.files[0].language)}
-						created={gist.createdAt}
+						created={gist.created_at}
 						url={gist.url}
 						owner={gist.owner.login} 
-						//activeGistId={this.props.activeGistId}
-						//changeActive={this.changeActiveGist} 
+						activeGistId={this.props.activeGistId}
+						setActive={() => this.props.setActive(gist.id)}
 					/>
     			);
     		}, this); 
 			
     		if(this.props.fetchMethod !== 'all') {
 				return (
-					<div className='contentLeft'>
-						<ul className='listGists'>
-							{gists}
-						</ul>
-					</div>
+					<ul className='listGists'>
+						{gists}
+					</ul>
 				);
     		}
     		else {
     			return (
-    				<div className='contentLeft'>
-						<ul className='listGists'>
-							{gists}
-							<input type='button' id='loadMore' value='Lataa lisaa' />
-						</ul>
-					</div>		
+					<ul className='listGists'>
+						{gists}
+						<input type='button' id='loadMore' value='Lataa lisaa' />
+					</ul>	
 				);
     		}
     	}

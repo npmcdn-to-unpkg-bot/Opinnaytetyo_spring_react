@@ -2,18 +2,117 @@ import * as types from './actionTypes';
 import { parseFiles, parseFilesWithContent } from '../utility/parseFiles';
 
 
-export function requestSelectedGist(id) {
+/////////////////////////////////////////////////////////////////////////
+//Käyttäjätietojen hakeminen////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+export function requestUserInfo() {
 	return {
-		type: types.FETCH_ACTIVE_GIST_REQUEST
+		type: types.FETCH_USER_INFO_REQUEST
 	};
 }
 
-export function receiveSelectedGist(response) {
-	response.files = parseFilesWithContent(response.files);
+export function receivedUserInfo(userInfo) {
+	//activeGist.files = parseFilesWithContent(activeGist.files);
+
+	return {
+		type: types.FETCH_USER_INFO_SUCCESS,
+		userLogin: userInfo.login,
+		avatarUrl: userInfo.avatar_url
+	};
+}
+
+export function userInfoFetchFailed() {
+	return {
+	    type: types.FETCH_USER_INFO_FAILURE,
+	    
+	}
+}
+
+/**
+ * Haetaan valittu gist
+ */
+export function fetchUserInfo() {
+	//var accessToken = getAccessToken();
+	var accessToken = "";
+					   
+	const url = "https://api.github.com/applications//tokens/";
+				 
+	var authString = ":";
+					 
+	var encodedAuthString = window.btoa(authString); 
+	console.log(encodedAuthString)
+	
+	var fetchInit = {
+		method: 'get',
+		headers: {
+			'Accept': 'application/json',
+       		'Content-Type': 'application/json',
+       		'Authorization': 'Basic =='
+		},
+		mode: 'no-cors'
+		
+	};
+	
+	return dispatch => {
+	    dispatch(requestUserInfo())
+	    return fetch("https://api.github.com/applications/566fea61a0cebae27268/tokens/bf986deaa68710362faa65ffa123822396bb5f04", fetchInit)
+	    .then(response => {
+	    	if(response.ok) {
+	    		console.log("Haku onnistui")
+	    		response.json().then(json => dispatch(receivedUserInfo(json)))
+	    	}
+	    	else {
+	    	    const error = new Error(
+	    	    		response.status + " " + response.statusText);
+	    	    error.response = response;
+	    	    throw error;
+	    	}
+	    }).catch(function(error) {
+	    	  console.log('Haku ei onnistunut: ' + error.message);
+	    });
+	};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////
+//Aktiivisen gistin hakeminen////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+export function requestSelectedGist(activeGistId) {
+	return {
+		type: types.FETCH_ACTIVE_GIST_REQUEST,
+		activeGistId,
+		isLoading: true
+	};
+}
+
+export function receiveSelectedGist(activeGist) {
+	activeGist.files = parseFilesWithContent(activeGist.files);
 
 	return {
 		type: types.FETCH_ACTIVE_GIST_SUCCESS,
-		activeGist: response
+		activeGist,
+		isLoading: false
 	};
 }
 
@@ -28,7 +127,7 @@ export function selectedGistFetchFailed() {
  * Haetaan valittu gist
  */
 export function fetchSelectedGist(id) {
-	var fetchInit = {
+	const fetchInit = {
 		method: 'get',
 		headers: {
 			'Accept': 'application/json',
@@ -38,11 +137,10 @@ export function fetchSelectedGist(id) {
 	};
 	
 	return dispatch => {
-	    dispatch(requestSelectedGist())
+	    dispatch(requestSelectedGist(id))
 	    return fetch('https://api.github.com/gists/' + id, fetchInit)
 	    .then(response => {
 	    	if(response.ok) {
-	    		console.log("Haku onnistui")
 	    		response.json().then(json => dispatch(receiveSelectedGist(json)))
 	    	}
 	    	else {
@@ -57,6 +155,10 @@ export function fetchSelectedGist(id) {
 	}
 }
 
+
+/////////////////////////////////////////////////////////////////////////
+//Hakuehtoja vastaavien gistien hakeminen////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 
 /**
@@ -85,7 +187,6 @@ export function receiveGists(response) {
 	    isLoading: false
 	}
 }
-
 
 
 /**
@@ -117,7 +218,7 @@ export function fetchGists() {
 	return dispatch => {
 	    dispatch(requestGists());//Loaderit päälle
 	    
-	    return fetch('https://api.github.com/users/octocat/gists', fetchInit)
+	    return fetch('https://api.github.com/users/TatuPutto/gists', fetchInit)
     	.then(response => {
     		if(response.ok) {
 				response.json().then(json => {

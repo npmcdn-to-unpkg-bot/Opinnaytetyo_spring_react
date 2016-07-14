@@ -14,35 +14,56 @@ const SAMPLEDATA = [
 
 //Asetetaan sovelluksen alustava state
 const initialState = {
-	gists: SAMPLEDATA,
+	userLogin: null,
+	avatarUrl: null,
+	//gists: SAMPLEDATA,
+	gists: null,
 	activeGist: null,
-	isLoading: false
+	activeGistId: null,
+	isLoadingList: false,
+	isLoadingActive: false
 };
 
 
 //Gisteihin liittyvät actionit
 const gists = (state = initialState, action) => {
 	switch(action.type) {
+		//Gistit listaa varten
 		case types.FETCH_GISTS_REQUEST:
 			return Object.assign({}, state, {
-				isLoading: true
+				isLoadingList: action.isLoading
 			});
 			break;
 		case types.FETCH_GISTS_SUCCESS:
 			return Object.assign({}, state, {
 				gists: action.gists,
-				isLoading: false
+				isLoadingList: action.isLoading,
 			});
 			break;
 		case types.FETCH_GISTS_FAILURE:
 			return Object.assign({}, state, {
 				gists: action.gists,
-				isLoading: false
+				isLoadingList: action.isLoading
+			});
+			break;
+			//Yksittäinen gist
+		case types.FETCH_ACTIVE_GIST_REQUEST:
+			return Object.assign({}, state, {
+				activeGistId: action.activeGistId,
+				isLoadingActive: action.isLoading
 			});
 			break;
 		case types.FETCH_ACTIVE_GIST_SUCCESS:
 			return Object.assign({}, state, {
 				activeGist: action.activeGist,
+				isLoadingActive: action.isLoading
+			});
+			break;
+		//Käyttäjätiedot
+		case types.FETCH_USER_INFO_SUCCESS:
+			return Object.assign({}, state, {
+				userLogin: action.userLogin,
+				avatarUrl: action.avatarUrl
 			});
 			break;
 		default:

@@ -4,6 +4,11 @@ export const SELECT_GIST = 'SELECT_GIST';
  * Action typet
  */
 
+//Käyttäjätietojen hakeminen
+export const FETCH_USER_INFO_REQUEST = 'FETCH_USER_INFO_REQUEST';
+export const FETCH_USER_INFO_SUCCESS = 'FETCH_USER_INFO_SUCCESS';
+export const FETCH_USER_INFO_FAILURE = 'FETCH_USER_INFO_FAILURE';
+
 //Gistien hakeminen
 export const FETCH_GISTS_REQUEST = 'FETCH_GISTS_REQUEST';
 export const FETCH_GISTS_SUCCESS = 'FETCH_GISTS_SUCCESS';
