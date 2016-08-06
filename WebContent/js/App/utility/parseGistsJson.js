@@ -1,3 +1,17 @@
+export function parseGistsJson(json) {
+	let gists = [];
+	
+	json.forEach(gist => {
+		gists.push(Object.assign({}, gist, {
+			url: "#/gist/" + gist.id,
+			files: parseFiles(gist.files)
+		}));
+		console.log(gists);
+	})
+	
+	return gists;
+}
+
 export function parseFiles(json) {
 	var files = [];
 	
@@ -12,7 +26,7 @@ export function parseFiles(json) {
 	return files;
 }
 
-export function parseFilesWithContent(json) {
+export function parseFilesWithSource(json) {
 	var files = [];
 	
 	for (var key in json) {

@@ -10,6 +10,10 @@ import ShowActiveGist from './ShowActiveGist';
 
 class ListingPage extends React.Component {
 	
+	componentWillMount() {
+		{this.props.getGists()}
+	}
+	
 	render() {
 		return (			
 			<div className='gists'>

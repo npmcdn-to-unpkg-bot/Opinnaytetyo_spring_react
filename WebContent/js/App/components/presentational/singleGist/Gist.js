@@ -3,13 +3,20 @@ import React from 'react';
 import GistInfo from '../reusable/GistInfo';
 import GistFile from '../reusable/GistFile';
 
+import { fetchUserInfo, fetchGists, fetchSelectedGist } from '../../../actions/actions';
+
 class Gist extends React.Component {
+
+	componentWillMount() {
+		{this.props.getGist()}
+	}
 	
 	render() {
+		console.log(this.props.isLoading);
 		const gist = this.props.activeGist;
 		
-		if(gist === null) {	
-			return <div className='loading'></div>;	
+		if(this.props.isLoading === true || gist === null) {	
+			return <div className='loading'></div>; 
 		}
 		else {
 			var files = gist.files.map(function(file, index) { 

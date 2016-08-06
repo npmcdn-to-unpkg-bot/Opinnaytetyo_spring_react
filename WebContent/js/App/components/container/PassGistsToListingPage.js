@@ -14,7 +14,7 @@ var activeId = null;
 
 const mapStateToProps = (state) => {
 	activeId = state.default.activeGistId;
-	console.log(state.default.activeGist)
+	
 	return {
 		gists: state.default.gists,
 		activeGist: state.default.activeGist,
@@ -27,6 +27,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, state) => {
 	return {
+		getGists: () => {
+			dispatch(fetchGists())
+		},
 		setActive: (id) => {
 			if(id !== activeId) {
 				dispatch(fetchSelectedGist(id))
@@ -35,7 +38,7 @@ const mapDispatchToProps = (dispatch, state) => {
 				console.log("aktiivinen")
 			}
 		}
-	}
+	};
 }
 
 const PassGistsToListingPage = connect(

@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
-import { parseFiles, parseFilesWithContent } from '../utility/parseFiles';
+import { parseGistsJson, parseFiles, parseFilesWithSource } 
+		from '../utility/parseGistsJson';
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -11,13 +12,13 @@ export function requestUserInfo() {
 	};
 }
 
-export function receivedUserInfo(userInfo) {
-	//activeGist.files = parseFilesWithContent(activeGist.files);
+export function receivedUserInfo(json) {
+	activeGist.files = parseFilesWithSource(activeGist.files);
 
 	return {
 		type: types.FETCH_USER_INFO_SUCCESS,
-		userLogin: userInfo.login,
-		avatarUrl: userInfo.avatar_url
+		userLogin: json.login,
+		avatarUrl: json.avatar_url
 	};
 }
 
@@ -107,8 +108,8 @@ export function requestSelectedGist(activeGistId) {
 }
 
 export function receiveSelectedGist(activeGist) {
-	activeGist.files = parseFilesWithContent(activeGist.files);
-
+	activeGist.files = parseFilesWithSource(activeGist.files);
+	
 	return {
 		type: types.FETCH_ACTIVE_GIST_SUCCESS,
 		activeGist,
@@ -132,7 +133,7 @@ export function fetchSelectedGist(id) {
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token '
+       		'Authorization': 'token 6d3005f4f0a10c6086bd2c3a315b1366f4ad2024'
 		}
 	};
 	
@@ -176,14 +177,10 @@ export function requestGists(id) {
 /**
  * Otetaan löydetyt gistit vastaan
  */
-export function receiveGists(response) {
-	response.forEach(gist => {
-		gist.files = parseFiles(gist.files);
-	});
-
+export function receiveGists(json) {
 	return {
 	    type: types.FETCH_GISTS_SUCCESS,
-	    gists: response,
+	    gists: parseGistsJson(json),
 	    isLoading: false
 	}
 }
@@ -206,12 +203,13 @@ export function gistsFetchFailed() {
  * Suoritetaan gistien hakeminen
  */
 export function fetchGists() {
+	console.log("Haetaan gistit")
 	var fetchInit = {
 		method: 'get',
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token '
+       		'Authorization': 'token 6d3005f4f0a10c6086bd2c3a315b1366f4ad2024'
 		}
 	};
 	

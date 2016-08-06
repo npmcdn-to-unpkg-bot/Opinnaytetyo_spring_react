@@ -63,7 +63,7 @@ public class CheckAccessTokenCookie {
 		String id = AccountController.clientId;
 		String secret = AccountController.clientSecret;
 		String url = "https://api.github.com/applications/" + id + "/tokens/" + accessToken + "";
-		
+		System.out.println("Tarkistetaan token: " + accessToken + "\n" + url);
 		responseContent = connection.formConnection("GET", url, "", id, secret);
 	}
 }

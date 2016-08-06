@@ -24,7 +24,7 @@ const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 //store.dispatch(fetchGists());
 
 //store.dispatch(fetchSelectedGist(state.default.activeGist));
-store.dispatch(fetchGists());
+//store.dispatch(fetchGists());
 console.log(store.getState())
 
 //setTimeout(function() {
@@ -44,7 +44,7 @@ render(
 		<Router history={hashHistory}>
 			<Route path="/" component={Root}>
 				<IndexRoute component={PassGistsToListingPage} />
-				<Route path="gist" component={PassGistToSingle} />" +
+				<Route path="gist/*" component={PassGistToSingle} />" +
 			</Route>
 		</Router>
 	</Provider>,

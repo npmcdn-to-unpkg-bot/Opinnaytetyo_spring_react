@@ -30,9 +30,8 @@ class GistList extends React.Component {
 	
 	
 	render() {
-		console.log(this.props.isLoading)
 		//Näytetään latausindikaattori jos lataus on kesken
-		if(this.props.isLoading === true) {
+		if(this.props.isLoading === true || this.props.gists === null) {
     		return <div className='loading'></div>; 
 		}
 		/*Puretaan gistit sisältävä taulukko ja 
