@@ -52,8 +52,7 @@ function formatTime(time) {
 	var hours = date.getHours();
 	var minutes = date.getMinutes(); 
 	
-	var formattedTime = day + "." + month + "." + year + 
+	return day + "." + month + "." + year + 
 			", " + hours + ":" + minutes;
-	return formattedTime;
 }
 

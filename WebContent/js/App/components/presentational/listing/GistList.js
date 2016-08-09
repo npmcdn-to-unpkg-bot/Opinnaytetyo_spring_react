@@ -1,4 +1,5 @@
 import React from 'react';
+
 import GistListItem from './GistListItem';
 
 
@@ -38,6 +39,7 @@ class GistList extends React.Component {
 		 *luodaan arvojen pohjalta singlegist komponentteja
 		 */
     	else {
+    		console.log(this.props.gists)
     		var gists = this.props.gists.map(gist => {
     			return (
 					<GistListItem 
@@ -68,7 +70,7 @@ class GistList extends React.Component {
 					<ul className='listGists'>
 						{gists}
 						<input type='button' id='loadMore' value='Lataa lisaa' />
-					</ul>	
+					</ul>
 				);
     		}
     	}

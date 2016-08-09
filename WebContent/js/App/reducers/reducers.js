@@ -21,7 +21,8 @@ const initialState = {
 	activeGist: null,
 	activeGistId: null,
 	isLoadingList: false,
-	isLoadingActive: false
+	isLoadingActive: false,
+	chronologicalOrder: false
 };
 
 
@@ -64,6 +65,20 @@ const gists = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				userLogin: action.userLogin,
 				avatarUrl: action.avatarUrl
+			});
+			break;
+		//Näytetään gistit vanhimmasta uusimpaan
+		case types.SORT_OLDEST_TO_NEWEST:
+			return Object.assign({}, state, {
+				chronologicalOrder: action.chronologicalOrder,
+				gists: action.gists
+			});
+			break;
+		//Näytetään gistit uusimmasta vanhimpaan
+		case types.SORT_NEWEST_TO_OLDEST:
+			return Object.assign({}, state, {
+				chronologicalOrder: action.chronologicalOrder,
+				gists: action.gists
 			});
 			break;
 		default:

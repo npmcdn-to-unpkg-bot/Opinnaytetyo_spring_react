@@ -132,7 +132,7 @@ export function fetchSelectedGist(id) {
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token '
+       		'Authorization': 'token e81a507a4af3abc7c59574de42e54431ccbdf9b1'
 		}
 	};
 	
@@ -208,7 +208,7 @@ export function fetchGists() {
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token '
+       		'Authorization': 'token e81a507a4af3abc7c59574de42e54431ccbdf9b1'
 		}
 	};
 	
@@ -236,7 +236,39 @@ export function fetchGists() {
 }
 
 
+//Järjestetään gistit vanhimmasta uusimpaan
+export function sortOldestToNewest(gists) {
+	console.log("Vanhimmat/uusimmat")
+	var sorted = gists.sort(function(a, b) {
+		var dateA = new Date(a.updated_at);
+		var dateB = new Date(b.updated_at);
+		
+		return dateA - dateB;
+	});
+	console.log(sorted[0].id)
+	return {
+	    type: types.SORT_OLDEST_TO_NEWEST,
+	    chronologicalOrder: true,
+	    gists: sorted
+	}
+}
 
+//Järjestetään gistit uusimmasta vanhimpaan
+export function sortNewestToOldest(gists) {
+	console.log("Uusimmat/vanhimmat")
+	var sorted = gists.sort(function(a, b) {
+		var dateA = new Date(a.updated_at);
+		var dateB = new Date(b.updated_at);
+		
+		return dateB - dateA;
+	});
+	console.log(sorted[0].id)
+	return {
+	    type: types.SORT_NEWEST_TO_OLDEST,
+	    chronologicalOrder: false,
+	    gists: sorted
+	}
+}
 
 
 

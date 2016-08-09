@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 import ListingPage from '../presentational/listing/ListingPage';
 
-import { fetchUserInfo, fetchGists, fetchSelectedGist } from '../../actions/actions';
+import { fetchUserInfo, fetchGists, fetchSelectedGist, 
+		sortOldestToNewest, sortNewestToOldest} from '../../actions/actions';
 
 
 require('../../../../css/Gists.css');
@@ -20,22 +21,32 @@ const mapStateToProps = (state) => {
 		activeGist: state.default.activeGist,
 		activeGistId: state.default.activeGistId,
 		isLoadingList: state.default.isLoadingList,
-		isLoadingActive: state.default.isLoadingActive
+		isLoadingActive: state.default.isLoadingActive,
+		chronologicalOrder: state.default.chronologicalOrder
 	}
 }
 
 
-const mapDispatchToProps = (dispatch, state) => {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		getGists: () => {
-			dispatch(fetchGists())
+			dispatch(fetchGists());
 		},
 		setActive: (id) => {
 			if(id !== activeId) {
-				dispatch(fetchSelectedGist(id))
+				dispatch(fetchSelectedGist(id));
+			}
+		},
+		sortByDate: (gists, chronologicalOrder) => {
+			console.log(chronologicalOrder)
+			if(chronologicalOrder) {
+				
+				console.log('Vanhimmasta uusimpaan')
+				dispatch(sortOldestToNewest(gists));
 			}
 			else {
-				console.log("aktiivinen")
+				console.log('Uusimmasta vanhimpaan')
+				dispatch(sortNewestToOldest(gists));
 			}
 		}
 	};
