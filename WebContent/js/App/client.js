@@ -13,6 +13,7 @@ import Root from './components/presentational/Root';
 
 import PassGistsToListingPage from './components/container/PassGistsToListingPage';
 import PassGistToSingle from './components/container/PassGistToSingle';
+import CreateGist from './components/presentational/create/CreateGist';
 
 
 import * as hooks from './hooks';
@@ -44,7 +45,8 @@ render(
 		<Router history={hashHistory}>
 			<Route path="/" component={Root}>
 				<IndexRoute component={PassGistsToListingPage} />
-				<Route path="gist/*" component={PassGistToSingle} />" +
+				<Route path="gist/*" component={PassGistToSingle} />
+				<Route path="create" component={CreateGist} />
 			</Route>
 		</Router>
 	</Provider>,

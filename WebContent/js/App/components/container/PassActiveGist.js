@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import ShowActiveGist from '../presentational/ShowActiveGist';
+import ShowActiveGist from '../presentational/listing/ShowActiveGist';
 
 const mapStateToProps = (state) => {
 	return {

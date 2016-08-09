@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 
 
-import ListingPage from '../presentational/ListingPage';
+import ListingPage from '../presentational/listing/ListingPage';
 
 import { fetchUserInfo, fetchGists, fetchSelectedGist } from '../../actions/actions';
 

@@ -2,11 +2,6 @@ import React from 'react';
 
 import GistList from './GistList';
 import ShowActiveGist from './ShowActiveGist';
-//import ShowActiveGist from "./ShowActiveGist";
-
-//Ladataan värikoodit ohjelmointikielille
-//const COLORS = require("../../../static/colors.json");
-
 
 class ListingPage extends React.Component {
 	

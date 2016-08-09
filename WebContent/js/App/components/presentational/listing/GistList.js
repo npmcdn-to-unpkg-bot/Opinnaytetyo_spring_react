@@ -3,7 +3,7 @@ import GistListItem from './GistListItem';
 
 
 //Ladataan värikoodit ohjelmointikielille
-const COLORS = require("../../../../static/colors.json");
+const COLORS = require("../../../../../static/colors.json");
 
 class GistList extends React.Component {
 
@@ -47,7 +47,7 @@ class GistList extends React.Component {
 						description={gist.description} 
 						language={gist.files[0].language}
 						color={this.getColorCode(gist.files[0].language)}
-						created={gist.created_at}
+						created={gist.formattedTime}
 						url={gist.url}
 						owner={gist.owner.login} 
 						activeGistId={this.props.activeGistId}

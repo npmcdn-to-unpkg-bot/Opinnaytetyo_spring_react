@@ -59,7 +59,6 @@ export function fetchUserInfo() {
 	    return fetch("https://api.github.com/applications/566fea61a0cebae27268/tokens/bf986deaa68710362faa65ffa123822396bb5f04", fetchInit)
 	    .then(response => {
 	    	if(response.ok) {
-	    		console.log("Haku onnistui")
 	    		response.json().then(json => dispatch(receivedUserInfo(json)))
 	    	}
 	    	else {
@@ -133,7 +132,7 @@ export function fetchSelectedGist(id) {
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token 6d3005f4f0a10c6086bd2c3a315b1366f4ad2024'
+       		'Authorization': 'token '
 		}
 	};
 	
@@ -209,7 +208,7 @@ export function fetchGists() {
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token 6d3005f4f0a10c6086bd2c3a315b1366f4ad2024'
+       		'Authorization': 'token '
 		}
 	};
 	

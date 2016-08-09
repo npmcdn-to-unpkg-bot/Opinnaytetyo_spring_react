@@ -1,7 +1,7 @@
 import React from 'react';
 
-import GistInfo from './reusable/GistInfo';
-import GistFile from './reusable/GistFile';
+import GistInfo from '../reusable/GistInfo';
+import GistFile from '../reusable/GistFile';
 
 class ShowActiveGist extends React.Component {
 	
