@@ -41,8 +41,19 @@ input[type="button"]:hover {
 	text-decoration: none;
 }
 	
+::-webkit-scrollbar {
+ 	width: 5px; 
+}
+
+::-webkit-scrollbar-track {
+ 	background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
 	
-.gists {
+.listing {
 	/*width: 90%;*/
     margin-right: auto;
     margin-left: auto;
@@ -75,12 +86,13 @@ input[type="button"]:hover {
 
 .listGists {
 	height: 100%;
-	overflow-y: scroll;
+	overflow: scroll;
 	background-color: #d4dde0;
 	list-style-type: none;
 	padding:0;
 	margin:0;
 }
+
 
 .singleGist {
 	/*height: 100px;*/
@@ -97,7 +109,7 @@ input[type="button"]:hover {
 }
 
 
-.description {
+.listing .description {
 	display: block;
 	min-height: 40px;
 }
@@ -143,6 +155,8 @@ input[type="button"]:hover {
 	margin-left: 30%;
 }
 
+
+
 .contentRight a {
 	font-size: 14px
 }
@@ -151,6 +165,12 @@ input[type="button"]:hover {
 	height: 100%;
 	overflow-y: scroll;
 }
+
+/*
+.showActiveGist:hover {
+	overflow-y: scroll;
+}
+*/
 
 .gistInfo {
     margin-left: auto;

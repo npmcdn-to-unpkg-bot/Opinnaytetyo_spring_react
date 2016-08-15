@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 import Filters from './Filters';
 import GistList from './GistList';
@@ -6,13 +7,14 @@ import ShowActiveGist from './ShowActiveGist';
 
 class ListingPage extends React.Component {
 	
-	componentWillMount() {
-		{this.props.getGists()}
+	componentDidMount() {
+		$('.contentLeft').css('height', '1015px');
+		$('.contentRight').css('height', '1050px');
 	}
 	
 	render() {
 		return (			
-			<div className='gists'>
+			<div className='listing'>
 				<div className='contentLeft'>
 					<Filters
 						chronologicalOrder={this.props.chronologicalOrder}
@@ -30,7 +32,7 @@ class ListingPage extends React.Component {
 					<ShowActiveGist
 						gist={this.props.activeGist}
 						isLoadingList={this.props.isLoadingList}
-						isLoadingActive={this.props.isLoadingActive}
+						isLoadingSelectedGist={this.props.isLoadingSelectedGist}
 					/>
 				</div>	
 			</div>

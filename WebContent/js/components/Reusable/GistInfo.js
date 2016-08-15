@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router";
+//import {Link} from "react-router";
 
 export default class GistInfo extends React.Component {
 	
@@ -10,7 +10,7 @@ export default class GistInfo extends React.Component {
 					<img className="ownerAvatar" src={this.props.avatarUrl} />
 					<a id="viewGist">{this.props.owner}</a>
 				</span>
-				
+				{/*
 				<span className="actions">
 					<Link to={"/delete/" + this.props.id}>
 						<input type="button" id="deleteGist" value="Poista"/>
@@ -18,7 +18,7 @@ export default class GistInfo extends React.Component {
 					<Link to={"/edit/" + this.props.id}>
 						<input type="button" id="editGist" value="Muokkaa"/>
 					</Link> 
-				</span>
+				</span>*/}
 				
 				<br/>
 				<span className="desc">

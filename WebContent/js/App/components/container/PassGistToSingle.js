@@ -7,13 +7,14 @@ import { fetchSelectedGist } from '../../actions/actions';
 
 
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
 	return {
 		activeGist: state.default.activeGist,
 		isLoading: state.default.isLoadingActive
 	}
 }
 
+/*
 const mapDispatchToProps = (dispatch) => {
 	//Erotellaan gistin id URL-osoitteesta
 	let gistId = window.location.hash.split("/")[2].split("?")[0];
@@ -25,10 +26,10 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-
+*/
 const PassGistToSingle = connect(
-	mapStateToProps, 
-	mapDispatchToProps
+		mapStateToProps 
+		//mapDispatchToProps
 )(Gist);
 
 

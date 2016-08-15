@@ -8,7 +8,7 @@ import Header from '../presentational/header/Header';
 require('../../../../css/Header.css');
 
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
 	return {
 		userLogin: state.default.userLogin,
 		avatarUrl: state.default.avatarUrl

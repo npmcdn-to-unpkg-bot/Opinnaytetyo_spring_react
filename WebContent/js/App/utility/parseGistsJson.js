@@ -1,9 +1,21 @@
-export function parseGistsJson(json) {
+export function parseSingleGistJson(gistJson) {
+	let gist = Object.assign({}, gistJson, {
+		viewUrl: '/gist/' + gistJson.id,
+		editUrl: '/edit/' + gistJson.id,
+		deleteUrl: '/delete/' + gistJson.id,
+		files: parseFilesWithSource(gistJson.files),
+		formattedTime: formatTime(gistJson.updated_at)
+	});
+
+	return gist;
+}
+
+export function parseMultipleGistsJson(gistsJson) {
 	let gists = [];
 	
-	json.forEach(gist => {
+	gistsJson.forEach(gist => {
 		gists.push(Object.assign({}, gist, {
-			url: "#/gist/" + gist.id,
+			viewUrl: '/gist/' + gist.id,
 			files: parseFiles(gist.files),
 			formattedTime: formatTime(gist.updated_at)
 		}));
@@ -18,9 +30,9 @@ export function parseFiles(json) {
 	
 	for (var key in json) {
 		var singleFile = {};
-		singleFile["filename"] = json[key].filename;
-		singleFile["language"] = json[key].language;
-		
+		singleFile['filename'] = json[key].filename;
+		singleFile['language'] = json[key].language;
+	
 		files.push(singleFile);
 	}
 	
@@ -33,9 +45,9 @@ export function parseFilesWithSource(json) {
 	
 	for (var key in json) {
 		var singleFile = {};
-		singleFile["filename"] = json[key].filename;
-		singleFile["description"] = json[key].language;
-		singleFile["content"] = json[key].content;
+		singleFile['filename'] = json[key].filename;
+		singleFile['description'] = json[key].language;
+		singleFile['content'] = json[key].content;
 		
 		files.push(singleFile);
 	}
@@ -52,7 +64,7 @@ function formatTime(time) {
 	var hours = date.getHours();
 	var minutes = date.getMinutes(); 
 	
-	return day + "." + month + "." + year + 
-			", " + hours + ":" + minutes;
+	return day + '.' + month + '.' + year + 
+			', ' + hours + ':' + minutes;
 }
 

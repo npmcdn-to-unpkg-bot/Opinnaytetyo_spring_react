@@ -8,11 +8,10 @@ import { fetchUserInfo, fetchGists, fetchSelectedGist } from '../../../actions/a
 class Gist extends React.Component {
 
 	componentWillMount() {
-		{this.props.getGist()}
+		//{this.props.getGist()}
 	}
 	
 	render() {
-		console.log(this.props.isLoading);
 		const gist = this.props.activeGist;
 		
 		if(this.props.isLoading === true || gist === null) {	
@@ -20,19 +19,27 @@ class Gist extends React.Component {
 		}
 		else {
 			var files = gist.files.map(function(file, index) { 
-				return <GistFile 
-							key={file.filename} 
-							filename={file.filename} 
-							content={file.content} 
-							editorId={'editor' + index} 
-						/>
+				return (
+					<GistFile 
+						key={file.filename} 
+						filename={file.filename} 
+						content={file.content} 
+						editorId={'editor' + index} 
+					/>
+				);
 			});
 
 			return (
 				<div className='showActiveGist'>
-					<GistInfo name={gist.files[0].filename} description={gist.description} 
-							viewUrl={gist.viewUrl} owner={gist.owner.login} avatarUrl={gist.avatarUrl} />
-		
+					<GistInfo 
+						name={gist.files[0].filename} 
+						description={gist.description} 
+						viewUrl={gist.viewUrl} 
+						editUrl={gist.editUrl}
+						owner={gist.owner.login} 
+						avatarUrl={gist.avatarUrl} 
+					/>
+					
 					<div className='gistFiles'>
 						{files}
 					</div>

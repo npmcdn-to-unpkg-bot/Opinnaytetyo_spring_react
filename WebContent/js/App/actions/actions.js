@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
-import { parseGistsJson, parseFiles, parseFilesWithSource } 
-		from '../utility/parseGistsJson';
+import { parseSingleGistJson, parseMultipleGistsJson, 
+		parseFiles, parseFilesWithSource } from '../utility/parseGistsJson';
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -13,7 +13,6 @@ export function requestUserInfo() {
 }
 
 export function receivedUserInfo(json) {
-	activeGist.files = parseFilesWithSource(activeGist.files);
 
 	return {
 		type: types.FETCH_USER_INFO_SUCCESS,
@@ -29,16 +28,14 @@ export function userInfoFetchFailed() {
 	}
 }
 
-/**
- * Haetaan valittu gist
- */
+
 export function fetchUserInfo() {
 	//var accessToken = getAccessToken();
-	var accessToken = "";
+	var accessToken = '';
 					   
-	const url = "https://api.github.com/applications//tokens/";
+	const url = 'https://api.github.com/applications//tokens/';
 				 
-	var authString = ":";
+	var authString = ':';
 					 
 	var encodedAuthString = window.btoa(authString); 
 	console.log(encodedAuthString)
@@ -56,18 +53,18 @@ export function fetchUserInfo() {
 	
 	return dispatch => {
 	    dispatch(requestUserInfo())
-	    return fetch("https://api.github.com/applications/566fea61a0cebae27268/tokens/bf986deaa68710362faa65ffa123822396bb5f04", fetchInit)
+	    return fetch('https://api.github.com/applications/566fea61a0cebae27268/tokens/bf986deaa68710362faa65ffa123822396bb5f04', fetchInit)
 	    .then(response => {
 	    	if(response.ok) {
 	    		response.json().then(json => dispatch(receivedUserInfo(json)))
 	    	}
 	    	else {
 	    	    const error = new Error(
-	    	    		response.status + " " + response.statusText);
+	    	    		response.status + ' ' + response.statusText);
 	    	    error.response = response;
 	    	    throw error;
 	    	}
-	    }).catch(function(error) {
+	    }).catch(error => {
 	    	  console.log('Haku ei onnistunut: ' + error.message);
 	    });
 	};
@@ -106,12 +103,11 @@ export function requestSelectedGist(activeGistId) {
 	};
 }
 
-export function receiveSelectedGist(activeGist) {
-	activeGist.files = parseFilesWithSource(activeGist.files);
+export function receiveSelectedGist(json) {
 	
 	return {
 		type: types.FETCH_ACTIVE_GIST_SUCCESS,
-		activeGist,
+		activeGist: parseSingleGistJson(json),
 		isLoading: false
 	};
 }
@@ -132,11 +128,12 @@ export function fetchSelectedGist(id) {
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token e81a507a4af3abc7c59574de42e54431ccbdf9b1'
+       		'Authorization': 'token '
 		}
 	};
 	
 	return dispatch => {
+		console.log('Haetaan gist - ' + id);
 	    dispatch(requestSelectedGist(id))
 	    return fetch('https://api.github.com/gists/' + id, fetchInit)
 	    .then(response => {
@@ -145,11 +142,11 @@ export function fetchSelectedGist(id) {
 	    	}
 	    	else {
 	    	    const error = new Error(
-	    	    		response.status + " " + response.statusText);
+	    	    		response.status + ' ' + response.statusText);
 	    	    error.response = response;
 	    	    throw error;
 	    	}
-	    }).catch(function(error) {
+	    }).catch(error => {
 	    	  console.log('Haku ei onnistunut: ' + error.message);
 	    });
 	}
@@ -179,7 +176,7 @@ export function requestGists(id) {
 export function receiveGists(json) {
 	return {
 	    type: types.FETCH_GISTS_SUCCESS,
-	    gists: parseGistsJson(json),
+	    gists: parseMultipleGistsJson(json),
 	    isLoading: false
 	}
 }
@@ -202,13 +199,13 @@ export function gistsFetchFailed() {
  * Suoritetaan gistien hakeminen
  */
 export function fetchGists() {
-	console.log("Haetaan gistit")
+	console.log('Haetaan gistit')
 	var fetchInit = {
 		method: 'get',
 		headers: {
 			'Accept': 'application/json',
        		'Content-Type': 'application/json',
-       		'Authorization': 'token e81a507a4af3abc7c59574de42e54431ccbdf9b1'
+       		'Authorization': 'token '
 		}
 	};
 	
@@ -216,36 +213,35 @@ export function fetchGists() {
 	    dispatch(requestGists());//Loaderit päälle
 	    
 	    return fetch('https://api.github.com/users/TatuPutto/gists', fetchInit)
-    	.then(response => {
-    		if(response.ok) {
-				response.json().then(json => {
-					dispatch(receiveGists(json));
-					dispatch(fetchSelectedGist(json[0].id));
-				})
-			}
-			else {
-				const error = new Error(
-						response.status + " " + response.statusText);
-				error.response = response;
-				throw error;
-			}
-		}).catch(function(error) {
-			console.log('Haku ei onnistunut: ' + error.message);
-		});
+    		.then(response => {
+	    		if(response.ok) {
+					response.json().then(json => {
+						dispatch(receiveGists(json));
+						dispatch(fetchSelectedGist(json[0].id));
+					})
+				}
+				else {
+					const error = new Error(
+							response.status + ' ' + response.statusText);
+					error.response = response;
+					throw error;
+				}
+			}).catch(error => {
+				console.log('Haku ei onnistunut: ' + error.message);
+			});
 	}
 }
 
 
 //Järjestetään gistit vanhimmasta uusimpaan
 export function sortOldestToNewest(gists) {
-	console.log("Vanhimmat/uusimmat")
 	var sorted = gists.sort(function(a, b) {
 		var dateA = new Date(a.updated_at);
 		var dateB = new Date(b.updated_at);
 		
 		return dateA - dateB;
 	});
-	console.log(sorted[0].id)
+	
 	return {
 	    type: types.SORT_OLDEST_TO_NEWEST,
 	    chronologicalOrder: true,
@@ -255,14 +251,13 @@ export function sortOldestToNewest(gists) {
 
 //Järjestetään gistit uusimmasta vanhimpaan
 export function sortNewestToOldest(gists) {
-	console.log("Uusimmat/vanhimmat")
 	var sorted = gists.sort(function(a, b) {
 		var dateA = new Date(a.updated_at);
 		var dateB = new Date(b.updated_at);
 		
 		return dateB - dateA;
 	});
-	console.log(sorted[0].id)
+	
 	return {
 	    type: types.SORT_NEWEST_TO_OLDEST,
 	    chronologicalOrder: false,
@@ -270,11 +265,93 @@ export function sortNewestToOldest(gists) {
 	}
 }
 
+//Uuden gistin luominen
+export function requestCreation(gistJson) {
+	return {
+		type: types.CREATE_GIST,
+		creating: true
+	};
+}
+
+export function receiveCreationResult(json) {
+	return {
+		type: types.RECEIVE_CREATION_RESULT,
+		creating: false,
+		
+	};
+}
 
 
+export function createGist(gistJson) {
+	console.log('Luodaan uusi gist')
+	var fetchInit = {
+		method: 'post',
+		body: gistJson,
+		headers: {
+			'Accept': 'application/json',
+       		'Content-Type': 'application/json',
+       		'Authorization': 'token '
+		}
+	};
+	
+	return dispatch => {
+	   // dispatch(requestCreation());//Loaderit päälle
+	    
+	    return fetch('https://api.github.com/gists', fetchInit)
+    	.then(response => {
+    		if(response.ok) {
+				response.json().then(json => {
+					console.log(json);
+					//dispatch(receiveCreationResult(json));
+				})
+			}
+			else {
+				const error = new Error(
+						response.status + ' ' + response.statusText);
+				error.response = response;
+				throw error;
+			}
+		}).catch(function(error) {
+			console.log('Gistin lisääminen ei onnistunut: ' + error.message);
+		});
+	}
+}
 
 
-
+export function editGist(gistId, gistJson) {
+	console.log('Muokataan gistiä')
+	var fetchInit = {
+		method: 'patch',
+		body: gistJson,
+		headers: {
+			'Accept': 'application/json',
+       		'Content-Type': 'application/json',
+       		'Authorization': 'token '
+		}
+	};
+	
+	return dispatch => {
+	   // dispatch(requestCreation());//Loaderit päälle
+	    
+	    return fetch('https://api.github.com/gists/' + gistId, fetchInit)
+    	.then(response => {
+    		if(response.ok) {
+				response.json().then(json => {
+					console.log('Gistin muokkaaminen onnistui!');
+					//dispatch(receiveCreationResult(json));
+				})
+			}
+			else {
+				const error = new Error(
+						response.status + ' ' + response.statusText);
+				error.response = response;
+				throw error;
+			}
+		}).catch(function(error) {
+			console.log('Gistin lisääminen ei onnistunut: ' + error.message);
+		});
+	}
+}
 
 
 

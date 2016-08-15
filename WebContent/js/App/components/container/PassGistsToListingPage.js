@@ -1,19 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
-
 import ListingPage from '../presentational/listing/ListingPage';
-
 import { fetchUserInfo, fetchGists, fetchSelectedGist, 
-		sortOldestToNewest, sortNewestToOldest} from '../../actions/actions';
+		sortOldestToNewest, sortNewestToOldest } from '../../actions/actions';
 
+require('../../../../css/Listing.css');
 
-require('../../../../css/Gists.css');
+let activeId = null;
 
-var activeId = null;
-
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
 	activeId = state.default.activeGistId;
 	
 	return {
@@ -21,31 +17,24 @@ const mapStateToProps = (state) => {
 		activeGist: state.default.activeGist,
 		activeGistId: state.default.activeGistId,
 		isLoadingList: state.default.isLoadingList,
-		isLoadingActive: state.default.isLoadingActive,
+		isLoadingSelectedGist: state.default.isLoadingSelectedGist,
 		chronologicalOrder: state.default.chronologicalOrder
 	}
 }
 
 
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch) {
 	return {
-		getGists: () => {
-			dispatch(fetchGists());
-		},
 		setActive: (id) => {
 			if(id !== activeId) {
 				dispatch(fetchSelectedGist(id));
 			}
 		},
 		sortByDate: (gists, chronologicalOrder) => {
-			console.log(chronologicalOrder)
 			if(chronologicalOrder) {
-				
-				console.log('Vanhimmasta uusimpaan')
 				dispatch(sortOldestToNewest(gists));
 			}
 			else {
-				console.log('Uusimmasta vanhimpaan')
 				dispatch(sortNewestToOldest(gists));
 			}
 		}

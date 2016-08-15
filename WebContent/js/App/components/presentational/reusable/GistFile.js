@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
 
 class GistFile extends React.Component {
 
 	componentDidMount() {
-		var lines = this.props.content.split("\n").length
+		var lines = this.props.content.split('\n').length
 	    var editor = ace.edit(this.props.editorId);
-	    editor.setTheme("ace/theme/cobalt");
-		editor.getSession().setMode("ace/mode/java");
+	    editor.setTheme('ace/theme/cobalt');
+		editor.getSession().setMode('ace/mode/java');
 	    editor.setShowPrintMargin(false);
 	    editor.setReadOnly(true);
 	    editor.setOptions({maxLines: lines});
@@ -18,9 +18,9 @@ class GistFile extends React.Component {
 	
 	render() {
 		return (
-			<div className="gistFile">
-				<div className="fileInfo">
-					<a className="filename" href="">{this.props.filename}</a>
+			<div className='gistFile'>
+				<div className='fileInfo'>
+					<a className='filename' href=''>{this.props.filename}</a>
 				</div>
 			
 				<div id={this.props.editorId}></div>

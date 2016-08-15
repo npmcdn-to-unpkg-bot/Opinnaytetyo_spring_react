@@ -1,11 +1,14 @@
-import { bindActionCreators } from 'redux';
-import * as actions from './actions/actions';
+import { fetchSelectedGist, fetchGists } from './actions/actions';
 
+import { store } from './createStore';
 
-export function bootstrap(dispatch) {
-  const boundActions = bindActionCreators(actions, dispatch);
-
-  return () => {
-	  boundActions.fetchGists();
-  };
+export function fetchSelectedGistOnEnter(nextState) {
+	let gistId = nextState.params.gistId;
+	
+	return store.dispatch(fetchSelectedGist(gistId));
 }
+
+export function fetchGistsOnEnter() {
+	return store.dispatch(fetchGists());
+}
+

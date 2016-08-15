@@ -39,7 +39,6 @@ class GistList extends React.Component {
 		 *luodaan arvojen pohjalta singlegist komponentteja
 		 */
     	else {
-    		console.log(this.props.gists)
     		var gists = this.props.gists.map(gist => {
     			return (
 					<GistListItem 
@@ -50,7 +49,7 @@ class GistList extends React.Component {
 						language={gist.files[0].language}
 						color={this.getColorCode(gist.files[0].language)}
 						created={gist.formattedTime}
-						url={gist.url}
+						url={gist.viewUrl}
 						owner={gist.owner.login} 
 						activeGistId={this.props.activeGistId}
 						setActive={() => this.props.setActive(gist.id)}
